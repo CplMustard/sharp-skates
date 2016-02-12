@@ -1,0 +1,4 @@
+# EXAMPLE: local.properties, copy this without the .example extension, 
+# and change the directory below to the correct one for your system
+# location of Android SDK
+sdk.dir=/usr/lib/android-sdk-linux/
