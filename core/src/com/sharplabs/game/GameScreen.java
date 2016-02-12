@@ -54,12 +54,17 @@ public class GameScreen implements Screen {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
-			dude.x = touchPos.x - 64/2;
+			// TODO: this should be some sort of "target position" instead
+			dude.x = touchPos.x - dude.width/2;
+			dude.y = touchPos.y - dude.height/2;
 		}
 
 		// enforce boundaries
 		if(dude.x < 0) dude.x = 0;
-		if(dude.x > 800 - 64) dude.x = 800 - 64;
+		if(dude.x > 800 - dude.width) dude.x = 800 - dude.width;
+
+		if(dude.y < 0) dude.y = 0;
+		if(dude.y > 480 - dude.height) dude.y = 800 - dude.height;
 	}
 
 	@Override
