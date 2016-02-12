@@ -22,9 +22,10 @@ public class GameScreen implements Screen {
 	public GameScreen(final SharpSkates gam) {
 		this.game = gam;
 		// image to be used for sprite
-		img = new Texture("badlogic.jpg");
+		img = new Texture("skater_a.png");
 		// camera to allow for view
 		camera = new OrthographicCamera();
+		// false means y increases upward
 		camera.setToOrtho(false, 800, 480);
 		// game objects are rectangles
 		dude = new Rectangle();
