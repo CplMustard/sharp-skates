@@ -1,24 +1,24 @@
 package com.sharplabs.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogix.gdx.Screen;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthogonalCamera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class MainMenuScreen implements Screen {
 	final SharpSkates game;
-	OrthogonalCamera camera;
+
+	OrthographicCamera camera;
 
 	public MainMenuScreen(final SharpSkates gam) {
 		// store game
 		game = gam;
 
 		// set up camera
-		camera = new OrthogonalCamera();
+		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 	}
 
-	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(214/255f, 236/255f, 235/255f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -33,5 +33,29 @@ public class MainMenuScreen implements Screen {
 			game.setScreen(new GameScreen(game));
 			dispose();
 		}
+	}
+
+	@Override
+	public void resize(int width, int height){
+	}
+
+	@Override
+	public void show() {
+	}
+
+	@Override
+	public void hide() {
+	}
+
+	@Override
+	public void pause() {
+	}
+
+	@Override
+	public void resume() {
+	}
+
+	@Override
+	public void dispose() {
 	}
 }
