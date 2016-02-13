@@ -23,8 +23,8 @@ public class GameScreen implements Screen {
 	OrthographicCamera camera;
 	float playTime;
 
-  //Char Tracker: Keeps Track of Sprites in Game
-  //Add new Skaters to this list (Suggestion: Set Player index 0)
+	//Char Tracker: Keeps Track of Sprites in Game
+	//Add new Skaters to this list (Suggestion: Set Player index 0)
 	public Array<Skater> skaterList = new Array();
 	int skaterCount = 0; 
     
@@ -81,22 +81,20 @@ public class GameScreen implements Screen {
 		//Check Overlap
 		//Intersection will equal a rectangle at the point of interesction
 		for(int i = 0; i < skaterCount; i++){
-				for(int j = 0; j < skaterCount; j++){
-						if(i!=j){
-							Rectangle intersection = new Rectangle(0,0,0,0);
-							intersector.intersectRectangles(skaterList.get(i).skaterRectangle, skaterList.get(j).skaterRectangle, intersection);
-							if(intersection.getHeight() != 0){
-							  //Interesction occured @
-							  //Check if Player
-							  //If Neither Player
-							    //Move Object 1 lightly 
-							    //Move Object 2 lightly
-                //If Player
-                  //Move non-player
-                  //Slow down player							    
-						  }
-						}
+			for(int j = i+1; j < skaterCount; j++){
+				Rectangle intersection = new Rectangle(0,0,0,0);
+				intersector.intersectRectangles(skaterList.get(i).skaterRectangle, skaterList.get(j).skaterRectangle, intersection);
+				if(intersection.getHeight() != 0){
+					//Interesction occured @
+					//Check if Player
+					//If Neither Player
+					//Move Object 1 lightly 
+					//Move Object 2 lightly
+					//If Player
+					//Move non-player
+					//Slow down player							    
 				}
+			}
 		}
 
 		dude.move(game);

@@ -39,7 +39,7 @@ public class Skater {
 		x = 0;
 		y = 0;
 		
-	  skaterRectangle.set(x,y,size,size);
+		skaterRectangle.set(x,y,size,size);
 		// store the image
 		img = image;
 
@@ -88,8 +88,8 @@ public class Skater {
 	}
 	
 	//Sets Collision Logic?
-	public void collision(Rectangle hit){
-	  cTime = 1000;
+	public void collision(Rectangle hit) {
+		cTime = 1000;
 	}
 
 	public void changeTarget(float nx, float ny, SharpSkates game) {
