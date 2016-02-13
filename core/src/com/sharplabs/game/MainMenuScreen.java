@@ -42,8 +42,9 @@ public class MainMenuScreen implements Screen {
 		gril = new Skater(grilImg, 32, Skater.Kind.Girl, game);
 
 		bg = new Sprite(new Texture("background.png"));
-		bg.setCenter(game.width/2 - 64, game.height/2);
-		bg.scale(0.05f);
+		bg.setSize(game.width, game.height);
+		bg.setCenter(game.width/2 - 80.0f, game.height/2);
+		bg.setScale(0.85f, 1.0f);
 
 		title = new Sprite(new Texture("title.png"));
 		title.setCenter(game.width/2 - 64, game.height/2);
