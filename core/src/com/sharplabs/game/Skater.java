@@ -143,6 +143,7 @@ public class Skater {
 
 	public void move(SharpSkates game, float delta, Array<Skater> skaterList) {
 		if(cTime == 0){
+		  dir = Direction.Right;
 		  modSpeed = 1;
 		  collided = false;
 		  switch(kind) {
@@ -163,6 +164,7 @@ public class Skater {
 		  }
 		}else{
 		  cTime--;
+		  dir = Direction.Wipeout;
 		  //modSpeed = modSpeed * (float)0.995;
 		  playerMove(game);
 		}
@@ -223,7 +225,9 @@ public class Skater {
 	}
 
 	void kidMove(SharpSkates game) {
-		if((Math.abs(x - targetX) < game.step) && (Math.abs(y - targetY) < game.step)) {
+		if(((Math.abs(x - targetX) <= game.step) && (Math.abs(y - targetY) <= game.step))
+		    || targetX > game.width - size || targetX < 0
+		    || targetY > game.height - size || targetY < 0) {
 			Random r = new Random();
 			float randX = r.nextFloat() * game.width/3 + game.width/4;
 			float randY = r.nextFloat() * game.height/3 + game.height/4;

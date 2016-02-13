@@ -74,7 +74,7 @@ public class GameScreen implements Screen {
 		game.batch.end();
 
 		// handle touch/mouse input
-		if(Gdx.input.isTouched()) {
+		if(Gdx.input.isTouched() && !skaterList.get(0).collided) {
 			// 3D because it's actually in 3D despite being in 2D
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
