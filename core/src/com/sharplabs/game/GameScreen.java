@@ -82,14 +82,27 @@ public class GameScreen implements Screen {
 				Rectangle intersection = new Rectangle(0,0,0,0);
 				intersector.intersectRectangles(skaterList.get(i).skaterRectangle, skaterList.get(j).skaterRectangle, intersection);
 				if(intersection.getHeight() != 0){
-					//Interesction occured @
-					//Check if Player
-					//If Neither Player
-					//Move Object 1 lightly 
-					//Move Object 2 lightly
-					//If Player
-					//Move non-player
-					//Slow down player							    
+					if(skaterList.get(i).collided == true || skaterList.get(j).collided == true){
+					  if(skaterList.get(i).collided == true && skaterList.get(j).collided == true){
+					    //BOTH COLLIDED: Bounce 
+					  }else if(skaterList.get(i).collided == true && skaterList.get(i).kind == Skater.Kind.Kid){
+					    //I COLLIDED -> KID: Other goes flying
+					  }else if(skaterList.get(j).collided == true && skaterList.get(j).kind == Skater.Kind.Kid){
+					    //J COLLIDED -> KID: Other goes flying
+					  }else if(skaterList.get(i).collided == true && skaterList.get(i).kind != Skater.Kind.Kid){
+					    //I COLLIDED -> ADULT: Other goes slow
+					  }else if(skaterList.get(j).collided == true && skaterList.get(j).kind != Skater.Kind.Kid){
+					    //J COLLIDED -> ADULT: Other goes slow
+					  }
+					}else if(skaterList.get(i).kind == Skater.Kind.Kid ^ skaterList.get(i).kind == Skater.Kind.Kid){
+					    //KIDvsNON-KID: kid careens
+					}else if((skaterList.get(i).kind == Skater.Kind.Player || skaterList.get(i).kind == Skater.Kind.Player) && (skaterList.get(i).kind == Skater.Kind.Hooligan || skaterList.get(i).kind == Skater.Kind.Hooligan)){
+					    //HOOLIGAN PLAYER: Player falls
+					}else if(skaterList.get(i).kind == Skater.Kind.Kid && skaterList.get(j).kind == Skater.Kind.Kid){
+					    //CHILD CHILD: Child Bounce
+					}else{
+					    //ADULTvsADULT: Both fall slow slide 
+					}									    
 				}
 			}
 		}
