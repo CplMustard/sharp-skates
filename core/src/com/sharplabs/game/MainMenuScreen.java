@@ -42,7 +42,7 @@ public class MainMenuScreen implements Screen {
 		kidImg = new Texture("kid.png");
 		kid = new Skater(kidImg, 16, Skater.Kind.Kid);
 
-		showTime = 0.0f;
+		showTime = 0;
 	}
 
 	public void render(float delta) {
