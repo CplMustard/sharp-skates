@@ -1,6 +1,7 @@
 package com.sharplabs.game;
 
-import static java.lang.System.*;
+import java.lang.Math;
+import java.util.Random;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -17,6 +18,8 @@ public class Skater {
 	public float targetY;
 	float deltaX;
 	float deltaY;
+	float originX;
+	float originY;
 
 	public int size;
 	public float x;
@@ -43,11 +46,28 @@ public class Skater {
 		Kid
 	}
 
-	public Skater(final Texture image, int size, Kind type) {
+	public Skater(final Texture image, int size, Kind type, SharpSkates game) {
 		this.kind = type;
 		this.size = size;
-		x = 0;
-		y = 0;
+		Random r = new Random();
+		float tmp = r.nextFloat();
+		tmp = tmp * game.width/2;
+		originX = tmp + game.width/4;
+//		originX = (float)((r.nextInt() % ((int)game.width/2 - size))) + game.width/4;
+		tmp = r.nextFloat();
+		tmp = tmp * game.width/2;
+		originY = tmp + game.height/4;
+//		originY = (float)((r.nextInt() % ((int)game.height/2 - size))) + game.height/4;
+		if(type == Kind.Player) {
+			x = game.width/2;
+			y = game.height/2;
+		} else if(type == Kind.Hooligan || type == Kind.Girl || type == Kind.Kid) {
+			x = originX;
+			y = originY;
+		} else {
+			x = 0;
+			y = 0;
+		}
 		collided = false;
 		
 		skaterRectangle.set(x,y,size,size);
@@ -116,26 +136,26 @@ public class Skater {
 		targetY = ny;
 	}
 
-	public void move(SharpSkates game, Array<Skater> skaterList) {
+	public void move(SharpSkates game, float delta, Array<Skater> skaterList) {
 		switch(kind) {
 			case Player:
-				playerMove(game, skaterList);
+				playerMove(game, delta, skaterList);
 				break;
 			case Hooligan:
-				hooliganMove(game, skaterList);
+				hooliganMove(game, delta, skaterList);
 				break;
 			case Girl:
-				girlMove(game, skaterList);
+				girlMove(game, delta, skaterList);
 				break;
 			case Kid:
-				kidMove(game, skaterList);
+				kidMove(game, delta, skaterList);
 				break;
 			default:
 				break;
 		}
 	}
 
-	void playerMove(SharpSkates game, Array<Skater> skaterList) {
+	void playerMove(SharpSkates game, float delta, Array<Skater> skaterList) {
 		if(Math.abs(x - targetX) > game.step) x += deltaX;
 		if(Math.abs(y - targetY) > game.step) y += deltaY;
 
@@ -160,9 +180,12 @@ public class Skater {
 				dir = Direction.Down;
 			}
 		}
+
+		skaterRectangle.x = this.x;
+		skaterRectangle.y = this.y;
 	}
 
-	void hooliganMove(SharpSkates game, Array<Skater> skaterList) {
+	void hooliganMove(SharpSkates game, float delta, Array<Skater> skaterList) {
 		float closestTargetX = Float.MAX_VALUE;
 		float closestTargetY = Float.MAX_VALUE;
 		for(int i=0; i<skaterList.size; i++){
@@ -175,37 +198,17 @@ public class Skater {
 		}
 		changeTarget(closestTargetX, closestTargetY, game);
 
-		if(Math.abs(x - targetX) > game.step) x += deltaX;
-		if(Math.abs(y - targetY) > game.step) y += deltaY;
-
-		if(x < 0) x = 0;
-		if(x > game.width - size/2) x = game.width - size/2;
-
-		if(y < 0) y = 0;
-		if(y > game.height - size/2) y = game.height - size/2;
-
-		float absX = Math.abs(deltaX);
-		float absY = Math.abs(deltaY);
-		if(absX > absY) {
-			if(deltaX > 0) {
-				dir = Direction.Right;
-			} else if(deltaX < 0) {
-				dir = Direction.Left;
-			}
-		} else if(absX < absY) {
-			if(deltaY > 0) {
-				dir = Direction.Up;
-			} else if(deltaY < 0) {
-				dir = Direction.Down;
-			}
-		}
+		playerMove(game, delta, skaterList);
 	}
 
-	void girlMove(SharpSkates game, Array<Skater> skaterList) {
+	void girlMove(SharpSkates game, float delta, Array<Skater> skaterList) {
 		// TODO: girl movement logic
+		changeTarget(originX + (float)Math.sin(delta)*245,
+				originY + (float)Math.cos(delta)*108, game);
+		playerMove(game, delta, skaterList);
 	}
 
-	void kidMove(SharpSkates game, Array<Skater> skaterList) {
+	void kidMove(SharpSkates game, float delta, Array<Skater> skaterList) {
 		// TODO: kid movement logic
 	}
 }

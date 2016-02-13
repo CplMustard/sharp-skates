@@ -20,6 +20,7 @@ public class GameScreen implements Screen {
 	final SharpSkates game;
 
 	Texture img;
+	Texture img2;
 	Skater dude;
 	Skater gril;
 	Skater hood;
@@ -39,7 +40,14 @@ public class GameScreen implements Screen {
 		this.game = gam;
 		// image to be used for sprite
 		img = new Texture("skater_a.png");
-		dude = new Skater(img, 32, Skater.Kind.Player);
+		dude = new Skater(img, 32, Skater.Kind.Player, game);
+		img2 = new Texture("girl.png");
+		gril = new Skater(img2, 32, Skater.Kind.Girl, game);
+		hoodImg = new Texture("hooligan.png");
+		hood = new Skater(hoodImg, 32, Skater.Kind.Hooligan, game);
+
+		skaterList.add(gril);
+
 		// camera to allow for view
 		camera = new OrthographicCamera();
 		// false means y increases upward
@@ -50,16 +58,6 @@ public class GameScreen implements Screen {
 		bg.scale(0.05f);
 
 		playTime = 0;
-
-		grilImg = new Texture("girl.png");
-		gril = new Skater(grilImg, 32, Skater.Kind.Girl);
-		gril.x = 400; gril.y = 200;
-		hoodImg = new Texture("hooligan.png");
-		hood = new Skater(hoodImg, 32, Skater.Kind.Hooligan);
-		hood.x = 200; hood.y = 0;
-
-		skaterList.add(gril);
-		skaterList.add(hood);
 	}
 
 	public void render(float delta) {
@@ -91,6 +89,7 @@ public class GameScreen implements Screen {
 			camera.unproject(touchPos);
 			dude.changeTarget(touchPos.x, touchPos.y, game);
 		}
+
 		//Check Overlap
 		//Intersection will equal a rectangle at the point of interesction
 		for(int i = 0; i < skaterCount; i++){
@@ -155,9 +154,9 @@ public class GameScreen implements Screen {
 			}
 		}
 
-		dude.move(game, skaterList);
-		gril.move(game, skaterList);
-		hood.move(game, skaterList);
+		dude.move(game, playTime, skaterList);
+		gril.move(game, playTime, skaterList);
+		hood.move(game, playTime, skaterList);
 	}
 
 	@Override
