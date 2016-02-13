@@ -11,6 +11,7 @@ public class SharpSkates extends Game {
 	public static float bgRed = 214/255f;
 	public static float bgGreen = 236/255f;
 	public static float bgBlue = 235/255f;
+	public static int spriteDim = 32;
 
 	SpriteBatch batch;
 	BitmapFont font;
