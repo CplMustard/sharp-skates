@@ -33,6 +33,9 @@ public class Skater {
 	public Direction dir;
 	public Kind kind;
 
+	public boolean protect;
+	public int protectTime = 0;
+
 	public enum Direction {
 		Right,
 		Left,
@@ -164,6 +167,7 @@ public class Skater {
 		  }
 		}else{
 		  cTime--;
+		  protectTime--;
 		  dir = Direction.Wipeout;
 		  //modSpeed = modSpeed * (float)0.995;
 		  playerMove(game);
