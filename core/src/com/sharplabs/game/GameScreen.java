@@ -15,12 +15,14 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.audio.Sound;
 
 public class GameScreen implements Screen {
 	final SharpSkates game;
 	OrthographicCamera camera;
 	float playTime;
 	Sprite bg;
+	Sound music;
 
 	//Char Tracker: Keeps Track of Sprites in Game
 	//Add new Skaters to this list (Suggestion: Set Player index 0)
@@ -49,6 +51,9 @@ public class GameScreen implements Screen {
 		bg.scale(0.05f);
 
 		playTime = 0;
+
+		music = Gdx.audio.newSound(Gdx.files.internal("sharp-skates-theme.wav"));
+		music.loop();
 	}
 
 	public void render(float delta) {
@@ -262,5 +267,6 @@ public class GameScreen implements Screen {
 	@Override
 	public void dispose() {
 		// dispose of native assets
+		music.dispose();
 	}
 }
