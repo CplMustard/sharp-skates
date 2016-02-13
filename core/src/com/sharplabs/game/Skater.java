@@ -143,8 +143,8 @@ public class Skater {
 
 	public void move(SharpSkates game, float delta, Array<Skater> skaterList) {
 		if(cTime == 0){
-		modSpeed = 1;
-		collided = false;
+		  modSpeed = 1;
+		  collided = false;
 		  switch(kind) {
 			  case Player:
 				  playerMove(game);
