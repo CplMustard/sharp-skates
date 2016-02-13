@@ -1,6 +1,7 @@
 package com.sharplabs.game;
 
 import java.lang.Math;
+import java.util.Random;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -17,7 +18,10 @@ public class Skater {
 	public float targetY;
 	float deltaX;
 	float deltaY;
+
   float modSpeed = 1;//Speed modifier, by default set to 1. Slow slide = .5 fast slide = 2
+	float originX;
+	float originY;
 
 	public int size;
 	public float x;
@@ -44,11 +48,28 @@ public class Skater {
 		Kid
 	}
 
-	public Skater(final Texture image, int size, Kind type) {
+	public Skater(final Texture image, int size, Kind type, SharpSkates game) {
 		this.kind = type;
 		this.size = size;
-		x = 0;
-		y = 0;
+		Random r = new Random();
+		float tmp = r.nextFloat();
+		tmp = tmp * game.width/2;
+		originX = tmp + game.width/4;
+//		originX = (float)((r.nextInt() % ((int)game.width/2 - size))) + game.width/4;
+		tmp = r.nextFloat();
+		tmp = tmp * game.width/2;
+		originY = tmp + game.height/4;
+//		originY = (float)((r.nextInt() % ((int)game.height/2 - size))) + game.height/4;
+		if(type == Kind.Player) {
+			x = game.width/2;
+			y = game.height/2;
+		} else if(type == Kind.Hooligan || type == Kind.Girl || type == Kind.Kid) {
+			x = originX;
+			y = originY;
+		} else {
+			x = 0;
+			y = 0;
+		}
 		collided = false;
 		
 		skaterRectangle.set(x,y,size,size);
@@ -122,9 +143,9 @@ public class Skater {
 		targetY = ny;
 	}
 
-	public void move(SharpSkates game) {
-	  if(cTime == 0){
-	    modSpeed = 1;
+
+	public void move(SharpSkates game, float delta) {
+		if(cTime == 0){
 		  switch(kind) {
 			  case Player:
 				  playerMove(game);
@@ -133,17 +154,17 @@ public class Skater {
 				  hooliganMove(game);
 				  break;
 			  case Girl:
-				  girlMove(game);
+				  girlMove(game, delta);
 				  break;
 			  case Kid:
 				  kidMove(game);
 				  break;
 			  default:
 				  break;
-		   }
+		  }
 		}else{
 		  cTime--;
-		  //SLIDE MOVEMENT
+		  //Move
 		}
 	}
 
@@ -172,14 +193,20 @@ public class Skater {
 				dir = Direction.Down;
 			}
 		}
+
+		skaterRectangle.x = this.x;
+		skaterRectangle.y = this.y;
 	}
 
 	void hooliganMove(SharpSkates game) {
 		// TODO: hooligan movement logic
 	}
 
-	void girlMove(SharpSkates game) {
+	void girlMove(SharpSkates game, float delta) {
 		// TODO: girl movement logic
+		changeTarget(originX + (float)Math.sin(delta)*245,
+				originY + (float)Math.cos(delta)*108, game);
+		playerMove(game);
 	}
 
 	void kidMove(SharpSkates game) {
