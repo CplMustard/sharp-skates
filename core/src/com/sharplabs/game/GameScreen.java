@@ -21,6 +21,10 @@ public class GameScreen implements Screen {
 
 	Texture img;
 	Skater dude;
+	Skater gril;
+	Skater hood;
+	Texture grilImg;
+	Texture hoodImg;
 	OrthographicCamera camera;
 	float playTime;
 	Sprite bg;
@@ -46,6 +50,16 @@ public class GameScreen implements Screen {
 		bg.scale(0.05f);
 
 		playTime = 0;
+
+		grilImg = new Texture("girl.png");
+		gril = new Skater(grilImg, 32, Skater.Kind.Girl);
+		gril.x = 400; gril.y = 200;
+		hoodImg = new Texture("hooligan.png");
+		hood = new Skater(hoodImg, 32, Skater.Kind.Hooligan);
+		hood.x = 200; hood.y = 0;
+
+		skaterList.add(gril);
+		skaterList.add(hood);
 	}
 
 	public void render(float delta) {
@@ -65,6 +79,8 @@ public class GameScreen implements Screen {
 		game.batch.begin();
 		bg.draw(game.batch);
 		game.batch.draw(dude.direction(dude.dir).getKeyFrame(playTime, true), dude.x, dude.y);
+		game.batch.draw(gril.direction(gril.dir).getKeyFrame(playTime, true), gril.x, gril.y);
+		game.batch.draw(hood.direction(hood.dir).getKeyFrame(playTime, true), hood.x, hood.y);
 		game.batch.end();
 
 		// handle touch/mouse input
@@ -107,7 +123,9 @@ public class GameScreen implements Screen {
 			}
 		}
 
-		dude.move(game);
+		dude.move(game, skaterList);
+		gril.move(game, skaterList);
+		hood.move(game, skaterList);
 	}
 
 	@Override

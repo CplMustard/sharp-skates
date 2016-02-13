@@ -1,6 +1,6 @@
 package com.sharplabs.game;
 
-import java.lang.Math;
+import static java.lang.System.*;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -112,26 +112,26 @@ public class Skater {
 		targetY = ny;
 	}
 
-	public void move(SharpSkates game) {
+	public void move(SharpSkates game, Array<Skater> skaterList) {
 		switch(kind) {
 			case Player:
-				playerMove(game);
+				playerMove(game, skaterList);
 				break;
 			case Hooligan:
-				hooliganMove(game);
+				hooliganMove(game, skaterList);
 				break;
 			case Girl:
-				girlMove(game);
+				girlMove(game, skaterList);
 				break;
 			case Kid:
-				kidMove(game);
+				kidMove(game, skaterList);
 				break;
 			default:
 				break;
 		}
 	}
 
-	void playerMove(SharpSkates game) {
+	void playerMove(SharpSkates game, Array<Skater> skaterList) {
 		if(Math.abs(x - targetX) > game.step) x += deltaX;
 		if(Math.abs(y - targetY) > game.step) y += deltaY;
 
@@ -158,15 +158,50 @@ public class Skater {
 		}
 	}
 
-	void hooliganMove(SharpSkates game) {
-		// TODO: hooligan movement logic
+	void hooliganMove(SharpSkates game, Array<Skater> skaterList) {
+		float closestTargetX = Float.MAX_VALUE;
+		float closestTargetY = Float.MAX_VALUE;
+		for(int i=0; i<skaterList.size; i++){
+			if(skaterList.get(i).kind == Kind.Girl){
+				if(Math.abs((y - skaterList.get(i).y)/(x - skaterList.get(i).x)) < Math.abs((y - closestTargetY)/(x - closestTargetX))){
+					closestTargetX = skaterList.get(i).x;
+					closestTargetY = skaterList.get(i).y;
+				}
+			}
+		}
+		changeTarget(closestTargetX, closestTargetY, game);
+
+		if(Math.abs(x - targetX) > game.step) x += deltaX;
+		if(Math.abs(y - targetY) > game.step) y += deltaY;
+
+		if(x < 0) x = 0;
+		if(x > game.width - size/2) x = game.width - size/2;
+
+		if(y < 0) y = 0;
+		if(y > game.height - size/2) y = game.height - size/2;
+
+		float absX = Math.abs(deltaX);
+		float absY = Math.abs(deltaY);
+		if(absX > absY) {
+			if(deltaX > 0) {
+				dir = Direction.Right;
+			} else if(deltaX < 0) {
+				dir = Direction.Left;
+			}
+		} else if(absX < absY) {
+			if(deltaY > 0) {
+				dir = Direction.Up;
+			} else if(deltaY < 0) {
+				dir = Direction.Down;
+			}
+		}
 	}
 
-	void girlMove(SharpSkates game) {
+	void girlMove(SharpSkates game, Array<Skater> skaterList) {
 		// TODO: girl movement logic
 	}
 
-	void kidMove(SharpSkates game) {
+	void kidMove(SharpSkates game, Array<Skater> skaterList) {
 		// TODO: kid movement logic
 	}
 }
