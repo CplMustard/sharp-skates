@@ -103,8 +103,6 @@ public class GameScreen implements Screen {
 				Rectangle intersection = new Rectangle(0,0,0,0);
 				intersector.intersectRectangles(skaterList.get(i).skaterRectangle, skaterList.get(j).skaterRectangle, intersection);
 				if(intersection.getHeight() != 0){
-				
-				    System.out.println("Collision");
 				    
 				    float iTargetX = skaterList.get(i).targetX;
 					float iTargetY = skaterList.get(i).targetY;
@@ -155,7 +153,7 @@ public class GameScreen implements Screen {
 			        else if(skaterList.get(i).collided == false &&  skaterList.get(j).collided == false){
 				        if(skaterList.get(i).kind == Skater.Kind.Kid ^ skaterList.get(j).kind == Skater.Kind.Kid){
 					        //KIDvsNON-KID: kid careens
-					        System.out.println(skaterList.get(i).kind);
+					        
 					        if(skaterList.get(i).kind == Skater.Kind.Kid){
 					            //KID INDEX I
 					            //skaterList.get(i).collision(jTargetX,jTargetY,(float)2,game);
