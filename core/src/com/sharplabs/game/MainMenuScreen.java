@@ -13,7 +13,7 @@ public class MainMenuScreen implements Screen {
 	final SharpSkates game;
 
 	OrthographicCamera camera;
-	Animation dude;
+	Skater dude;
 	Texture img;
 	Array<TextureRegion> reg;
 	float showTime;
@@ -28,11 +28,7 @@ public class MainMenuScreen implements Screen {
 
 		// set up animation
 		img = new Texture("skater_a.png");
-		reg = new Array();
-		// first column, both rows
-		reg.add(new TextureRegion(img, 0, 0, 32, 32));
-		reg.add(new TextureRegion(img, 0, 32, 32, 32));
-		dude = new Animation(0.6f, reg);
+		dude = new Skater(img);
 
 		showTime = 0.0f;
 	}
@@ -46,7 +42,11 @@ public class MainMenuScreen implements Screen {
 		game.batch.begin();
 		game.font.draw(game.batch, "Welcome to Sharp Skate", 100, 150);
 		game.font.draw(game.batch, "Tap anywhere to begin", 100, 100);
-		game.batch.draw(dude.getKeyFrame(showTime, true), 400, 240);
+		game.batch.draw(dude.direction(Skater.Direction.Left).getKeyFrame(showTime, true), 100, 240);
+		game.batch.draw(dude.direction(Skater.Direction.Up).getKeyFrame(showTime, true), 200, 240);
+		game.batch.draw(dude.direction(Skater.Direction.Down).getKeyFrame(showTime, true), 300, 240);
+		game.batch.draw(dude.direction(Skater.Direction.Right).getKeyFrame(showTime, true), 400, 240);
+		game.batch.draw(dude.direction(Skater.Direction.Wipeout).getKeyFrame(showTime, true), 500, 240);
 		game.batch.end();
 
 		if(Gdx.input.isTouched()) {
