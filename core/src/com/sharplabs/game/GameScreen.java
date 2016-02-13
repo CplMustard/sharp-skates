@@ -30,15 +30,24 @@ public class GameScreen implements Screen {
 	int skaterCount = 0; 
 
 
-	public GameScreen(final SharpSkates gam) {
+	public GameScreen(final SharpSkates gam, boolean male) {
 		this.game = gam;
 		// add skaters to list
-		skaterList.add(new Skater(new Texture("skater_a.png"), 32, Skater.Kind.Player, game));
-		skaterList.add(new Skater(new Texture("hooligan.png"), 32, Skater.Kind.Hooligan, game));
-		skaterList.add(new Skater(new Texture("hooligan.png"), 32, Skater.Kind.Hooligan, game));
-		skaterList.add(new Skater(new Texture("girl.png"), 32, Skater.Kind.Girl, game));
-		skaterList.add(new Skater(new Texture("kid.png"), 16, Skater.Kind.Kid, game));
-		skaterList.add(new Skater(new Texture("kid.png"), 16, Skater.Kind.Kid, game));
+		if(male) {
+			skaterList.add(new Skater(new Texture("skater_a.png"), 32, Skater.Kind.Player, game));
+			skaterList.add(new Skater(new Texture("hooligan.png"), 32, Skater.Kind.Hooligan, game));
+			skaterList.add(new Skater(new Texture("hooligan.png"), 32, Skater.Kind.Hooligan, game));
+			skaterList.add(new Skater(new Texture("girl.png"), 32, Skater.Kind.Girl, game));
+			skaterList.add(new Skater(new Texture("kid.png"), 16, Skater.Kind.Kid, game));
+			skaterList.add(new Skater(new Texture("kid.png"), 16, Skater.Kind.Kid, game));
+		} else {
+			skaterList.add(new Skater(new Texture("girl.png"), 32, Skater.Kind.Player, game));
+			skaterList.add(new Skater(new Texture("hooligan.png"), 32, Skater.Kind.Hooligan, game));
+			skaterList.add(new Skater(new Texture("hooligan.png"), 32, Skater.Kind.Hooligan, game));
+			skaterList.add(new Skater(new Texture("skater_a.png"), 32, Skater.Kind.Girl, game));
+			skaterList.add(new Skater(new Texture("kid.png"), 16, Skater.Kind.Kid, game));
+			skaterList.add(new Skater(new Texture("kid.png"), 16, Skater.Kind.Kid, game));
+		}
 		skaterCount = 6;
 
 		// camera to allow for view

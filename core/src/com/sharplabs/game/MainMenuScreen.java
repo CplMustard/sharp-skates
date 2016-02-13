@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 public class MainMenuScreen implements Screen {
@@ -16,12 +17,8 @@ public class MainMenuScreen implements Screen {
 	OrthographicCamera camera;
 	Skater dude;
 	Skater gril;
-	Skater hood;
-	Skater kid;
 	Texture dudeImg;
 	Texture grilImg;
-	Texture hoodImg;
-	Texture kidImg;
 	Array<TextureRegion> reg;
 	float showTime;
 	Sprite bg;
@@ -41,10 +38,6 @@ public class MainMenuScreen implements Screen {
 		dude = new Skater(dudeImg, 32, Skater.Kind.Player, game);
 		grilImg = new Texture("girl.png");
 		gril = new Skater(grilImg, 32, Skater.Kind.Girl, game);
-		hoodImg = new Texture("hooligan.png");
-		hood = new Skater(hoodImg, 32, Skater.Kind.Hooligan, game);
-		kidImg = new Texture("kid.png");
-		kid = new Skater(kidImg, 16, Skater.Kind.Kid, game);
 
 		bg = new Sprite(new Texture("background.png"));
 		bg.setCenter(game.width/2 - 64, game.height/2);
@@ -66,33 +59,23 @@ public class MainMenuScreen implements Screen {
 		game.batch.begin();
 		bg.draw(game.batch);
 		game.font.draw(game.batch, "Welcome to Sharp Skate", 100, 150);
-		game.font.draw(game.batch, "Tap anywhere to begin", 100, 100);
-		game.batch.draw(dude.direction(Skater.Direction.Left).getKeyFrame(showTime, true), 100, 240);
-		game.batch.draw(dude.direction(Skater.Direction.Up).getKeyFrame(showTime, true), 200, 240);
-		game.batch.draw(dude.direction(Skater.Direction.Down).getKeyFrame(showTime, true), 300, 240);
-		game.batch.draw(dude.direction(Skater.Direction.Right).getKeyFrame(showTime, true), 400, 240);
-		game.batch.draw(dude.direction(Skater.Direction.Wipeout).getKeyFrame(showTime, true), 500, 240);
-		game.batch.draw(gril.direction(Skater.Direction.Left).getKeyFrame(showTime, true), 100, 320);
-		game.batch.draw(gril.direction(Skater.Direction.Up).getKeyFrame(showTime, true), 200, 320);
-		game.batch.draw(gril.direction(Skater.Direction.Down).getKeyFrame(showTime, true), 300, 320);
-		game.batch.draw(gril.direction(Skater.Direction.Right).getKeyFrame(showTime, true), 400, 320);
-		game.batch.draw(gril.direction(Skater.Direction.Wipeout).getKeyFrame(showTime, true), 500, 320);
-		game.batch.draw(hood.direction(Skater.Direction.Left).getKeyFrame(showTime, true), 100, 160);
-		game.batch.draw(hood.direction(Skater.Direction.Up).getKeyFrame(showTime, true), 200, 160);
-		game.batch.draw(hood.direction(Skater.Direction.Down).getKeyFrame(showTime, true), 300, 160);
-		game.batch.draw(hood.direction(Skater.Direction.Right).getKeyFrame(showTime, true), 400, 160);
-		game.batch.draw(hood.direction(Skater.Direction.Wipeout).getKeyFrame(showTime, true), 500, 160);
-		game.batch.draw(kid.direction(Skater.Direction.Left).getKeyFrame(showTime, true), 100, 400);
-		game.batch.draw(kid.direction(Skater.Direction.Up).getKeyFrame(showTime, true), 200, 400);
-		game.batch.draw(kid.direction(Skater.Direction.Down).getKeyFrame(showTime, true), 300, 400);
-		game.batch.draw(kid.direction(Skater.Direction.Right).getKeyFrame(showTime, true), 400, 400);
-		game.batch.draw(kid.direction(Skater.Direction.Wipeout).getKeyFrame(showTime, true), 500, 400);
+		game.font.draw(game.batch, "Tap your preferred character", 100, 100);
+		game.batch.draw(dude.direction(Skater.Direction.Down).getKeyFrame(showTime, true), 200, 340);
+		game.batch.draw(gril.direction(Skater.Direction.Down).getKeyFrame(showTime, true), 400, 340);
 		title.draw(game.batch);
 		game.batch.end();
 
 		if(Gdx.input.isTouched()) {
-			game.setScreen(new GameScreen(game));
-			dispose();
+			Vector3 touchPos = new Vector3();
+			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(touchPos);
+			if(touchPos.x > 200 && touchPos.x < 232 && touchPos.y > 340 && touchPos.y < 372) {
+				game.setScreen(new GameScreen(game, true));
+				dispose();
+			} else if(touchPos.x > 400 && touchPos.x < 432 && touchPos.y > 340 && touchPos.y < 372) {
+				game.setScreen(new GameScreen(game, false));
+				dispose();
+			}
 		}
 	}
 
@@ -120,7 +103,5 @@ public class MainMenuScreen implements Screen {
 	public void dispose() {
 		dudeImg.dispose();
 		grilImg.dispose();
-		hoodImg.dispose();
-		kidImg.dispose();
 	}
 }
