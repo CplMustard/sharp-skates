@@ -48,16 +48,16 @@ public class Skater {
 		tmp4.flip(true, false);
 		sprites.add(new Animation(0.6f, new TextureRegion(img, size, size, size, size), tmp4));
 		// set up wipeout animation
-		tmp5.flip(false, true);
-		tmp6.flip(false, true);
-		tmp7.flip(false, true);
-		tmp8.flip(false, true);
-		sprites.add(new Animation(0.2f,
+		tmp5.flip(true, true);
+		tmp6.flip(true, true);
+		tmp7.flip(true, true);
+		tmp8.flip(true, true);
+		sprites.add(new Animation(0.15f*(size/32f),
 					new TextureRegion(img, size*2, 0, size, size),
 					new TextureRegion(img, size*2, size, size, size),
 					new TextureRegion(img, size*3, 0, size, size),
 					new TextureRegion(img, size*3, size, size, size),
-					tmp5, tmp6, tmp7, tmp8);
+					tmp5, tmp6, tmp7, tmp8));
 	}
 
 	public Animation direction(Direction dir) {
