@@ -99,30 +99,6 @@ public class GameScreen implements Screen {
 				}
 		}
 
-		// move if appropriate
-		if(Math.abs(dude.x - targetX) > game.step) dude.x += deltaX;
-		if(Math.abs(dude.y - targetY) > game.step) dude.y += deltaY;
-
-		// enforce boundaries
-		if(dude.x < 0) dude.x = 0;
-		if(dude.x > game.width - dude.size) dude.x = game.width - dude.size;
-
-		if(dude.y < 0) dude.y = 0;
-		if(dude.y > game.height - dude.size) dude.y = game.height - dude.size;
-
-		if(Math.abs(deltaX) > Math.abs(deltaY)) {
-			if(deltaX > 0) {
-				dir = Skater.Direction.Right;
-			} else if(deltaX < 0) {
-				dir = Skater.Direction.Left;
-			}
-		} else if(Math.abs(deltaX) < Math.abs(deltaY)) {
-			if(deltaY > 0) {
-				dir = Skater.Direction.Up;
-			} else if(deltaY < 0) {
-				dir = Skater.Direction.Down;
-			}
-
 		dude.move(game);
 	}
 
