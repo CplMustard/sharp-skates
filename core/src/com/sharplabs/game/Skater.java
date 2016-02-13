@@ -33,6 +33,9 @@ public class Skater {
 	public Direction dir;
 	public Kind kind;
 
+	public boolean protect;
+	public int protectTime = 0;
+
 	public enum Direction {
 		Right,
 		Left,
@@ -164,6 +167,7 @@ public class Skater {
 		  }
 		}else{
 		  cTime--;
+		  protectTime--;
 		  dir = Direction.Wipeout;
 		  //modSpeed = modSpeed * (float)0.995;
 		  playerMove(game);
@@ -227,34 +231,27 @@ public class Skater {
 	}
 
 	void hooliganMove(SharpSkates game, Array<Skater> skaterList) {
-		float closestTargetX = Float.MAX_VALUE;
-		float closestTargetY = Float.MAX_VALUE;
+		float closestTargetX = Float.MIN_VALUE;
+		float closestTargetY = Float.MIN_VALUE;
 		for(int i=0; i<skaterList.size; i++){
-			if(skaterList.get(i).kind == Kind.Girl){
-				if(Math.abs((y - skaterList.get(i).y) + (x - skaterList.get(i).x)) < Math.abs((y - closestTargetY) + (x - closestTargetX))){
+			//if(skaterList.get(i).kind == Kind.Girl){
+				if(Math.abs((y - skaterList.get(i).y) + (x - skaterList.get(i).x)) > Math.abs((y - closestTargetY) + (x - closestTargetX))){
 					closestTargetX = skaterList.get(i).x;
 					closestTargetY = skaterList.get(i).y;
 				}
-			}
+			//}
 		}
 		changeTarget(closestTargetX, closestTargetY, game);
-
-		playerMove(game);
-	}
-
-	void girlMove(SharpSkates game, float delta) {
-		changeTarget(originX + (float)Math.sin(delta)*245,
-				originY + (float)Math.cos(delta)*108, game);
 
 		if(Math.abs(x - targetX) > game.step * modSpeed) {
 			x += deltaX;
 		} else {
-			x -= deltaX;
+			x -= 2*deltaX;
 		}
 		if(Math.abs(y - targetY) > game.step * modSpeed) {
 			y += deltaY;
 		} else {
-			y -= deltaY;
+			y -= 2*deltaY;
 		}
 
 		if(x < 0) {
@@ -307,7 +304,13 @@ public class Skater {
 
 		skaterRectangle.x = this.x;
 		skaterRectangle.y = this.y;
+	}
 
+	void girlMove(SharpSkates game, float delta) {
+		changeTarget(originX + (float)Math.sin(delta)*245,
+				originY + (float)Math.cos(delta)*108, game);
+
+		playerMove(game);
 	}
 
 	void kidMove(SharpSkates game) {
