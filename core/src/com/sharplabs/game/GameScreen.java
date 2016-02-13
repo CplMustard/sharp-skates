@@ -29,11 +29,6 @@ public class GameScreen implements Screen {
 	//Add new Skaters to this list (Suggestion: Set Player index 0)
 	public Array<Skater> skaterList = new Array();
 	int skaterCount = 0; 
-    
-	float targetX;
-	float targetY;
-	float deltaX;
-	float deltaY;
 
 
 	public GameScreen(final SharpSkates gam) {
@@ -51,11 +46,6 @@ public class GameScreen implements Screen {
 		bg.scale(0.05f);
 
 		playTime = 0;
-
-		targetX = 0;
-		targetY = 0;
-		deltaX = 0;
-		deltaY = 0;
 	}
 
 	public void render(float delta) {
@@ -83,7 +73,6 @@ public class GameScreen implements Screen {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
-			// TODO: this should be some sort of "target position" instead
 			dude.changeTarget(touchPos.x, touchPos.y, game);
 		}
 		//Check Overlap
