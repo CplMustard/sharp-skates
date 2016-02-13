@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
+
 public class SharpSkates extends Game {
 	// constants for use throughout
 	public static int width = 800;

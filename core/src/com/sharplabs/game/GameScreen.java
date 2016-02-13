@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.math.Intersector;
 
 public class GameScreen implements Screen {
 	final SharpSkates game;
@@ -21,6 +23,11 @@ public class GameScreen implements Screen {
 	OrthographicCamera camera;
 	float playTime;
 
+  //Char Tracker: Keeps Track of Sprites in Game
+  //Add new Skaters to this list (Suggestion: Set Player index 0)
+	public Array<Skater> skaterList = new Array();
+	int skaterCount = 0; 
+    
 	float targetX;
 	float targetY;
 	float deltaX;
@@ -49,6 +56,9 @@ public class GameScreen implements Screen {
 	}
 
 	public void render(float delta) {
+	  //Intersector class 
+		Intersector intersector = new Intersector();  
+    	
 		// make background ice-like
 		Gdx.gl.glClearColor(game.bgRed, game.bgGreen, game.bgBlue, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -75,6 +85,27 @@ public class GameScreen implements Screen {
 			double theta = Math.atan2((targetX - dude.x), (targetY - dude.y));
 			deltaX = (float)Math.sin(theta) * game.step;
 			deltaY = (float)Math.cos(theta) * game.step;
+		}
+		
+		//Check Overlap
+		//Intersection will equal a rectangle at the point of interesction
+		for(int i = 0; i < skaterCount; i++){
+				for(int j = 0; j < skaterCount; j++){
+						if(i!=j){
+							Rectangle intersection = new Rectangle(0,0,0,0);
+							intersector.intersectRectangles(skaterList.get(i).skaterRectangle, skaterList.get(j).skaterRectangle, intersection);
+							if(intersection.getHeight() != 0){
+							  //Interesction occured @
+							  //Check if Player
+							  //If Neither Player
+							    //Move Object 1 lightly 
+							    //Move Object 2 lightly
+                //If Player
+                  //Move non-player
+                  //Slow down player							    
+						  }
+						}
+				}
 		}
 
 		// move if appropriate

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Skater {
 	Array<Animation> sprites;
@@ -13,6 +14,9 @@ public class Skater {
 	public int size;
 	public float x;
 	public float y;
+	public int cTime = 0;
+	
+	public Rectangle skaterRectangle = new Rectangle();
 
 	public enum Direction {
 		Right,
@@ -26,6 +30,8 @@ public class Skater {
 		this.size = size;
 		x = 0;
 		y = 0;
+		
+	  skaterRectangle.set(x,y,size,size);
 		// store the image
 		img = image;
 
@@ -69,6 +75,11 @@ public class Skater {
 
 	public Animation direction(Direction dir) {
 		return sprites.get(dir.ordinal());
+	}
+	
+	//Sets Collision Logic?
+	public void collision(Rectangle hit){
+	  cTime = 1000;
 	}
 
 }
