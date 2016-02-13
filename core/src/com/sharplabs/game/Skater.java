@@ -118,17 +118,19 @@ public class Skater {
 	
 	//Sets Collision Logic?
 	public void collision(float targX, float targY, float speed, SharpSkates game) {
-		cTime = 1000;
+		cTime = 600;
 		collided = true;
+		targetX = targX * 10;
+	  targetY = targY * 10;
 		modSpeed = speed;
-		playerMove(game);
 	}
 	
 	public void bounce(float targX, float targY, float speed, SharpSkates game){
-	  cTime = 250;
-		//collided = true;
+	  cTime = 300;
+		collided = true;
+		targetX = targX * 10;
+	  targetY = targY * 10;
 		modSpeed = speed;
-		playerMove(game);
 	}
 
 	public void changeTarget(float nx, float ny, SharpSkates game) {
@@ -141,6 +143,8 @@ public class Skater {
 
 	public void move(SharpSkates game, float delta, Array<Skater> skaterList) {
 		if(cTime == 0){
+		modSpeed = 1;
+		collided = false;
 		  switch(kind) {
 			  case Player:
 				  playerMove(game);
@@ -159,7 +163,8 @@ public class Skater {
 		  }
 		}else{
 		  cTime--;
-		  //Move
+		  //modSpeed = modSpeed * (float)0.995;
+		  playerMove(game);
 		}
 	}
 
