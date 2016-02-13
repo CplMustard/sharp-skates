@@ -23,6 +23,8 @@ public class MainMenuScreen implements Screen {
 	float showTime;
 	Sprite bg;
 	Sprite title;
+	Sprite button1;
+	Sprite button2;
 
 
 	public MainMenuScreen(final SharpSkates gam) {
@@ -47,6 +49,14 @@ public class MainMenuScreen implements Screen {
 		title.setCenter(game.width/2 - 64, game.height/2);
 		title.scale(0.05f);
 
+		button1 = new Sprite(new Texture("button.png"));
+		button1.setCenter(216, 356);
+		button1.scale(0.05f);
+
+		button2 = new Sprite(new Texture("button.png"));
+		button2.setCenter(416, 356);
+		button2.scale(0.05f);
+
 		showTime = 0;
 	}
 
@@ -58,6 +68,8 @@ public class MainMenuScreen implements Screen {
 		camera.update();
 		game.batch.begin();
 		bg.draw(game.batch);
+		button1.draw(game.batch);
+		button2.draw(game.batch);
 		game.font.draw(game.batch, "Welcome to Sharp Skate", 100, 150);
 		game.font.draw(game.batch, "Tap your preferred character", 100, 100);
 		game.batch.draw(dude.direction(Skater.Direction.Down).getKeyFrame(showTime, true), 200, 340);
@@ -69,10 +81,10 @@ public class MainMenuScreen implements Screen {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
-			if(touchPos.x > 200 && touchPos.x < 232 && touchPos.y > 340 && touchPos.y < 372) {
+			if(touchPos.x >= 200 && touchPos.x <= 328 && touchPos.y >= 308 && touchPos.y <= 436) {
 				game.setScreen(new GameScreen(game, true));
 				dispose();
-			} else if(touchPos.x > 400 && touchPos.x < 432 && touchPos.y > 340 && touchPos.y < 372) {
+			} else if(touchPos.x >= 400 && touchPos.x <= 526 && touchPos.y >= 308 && touchPos.y <= 408) {
 				game.setScreen(new GameScreen(game, false));
 				dispose();
 			}
