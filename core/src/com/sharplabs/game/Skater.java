@@ -14,8 +14,8 @@ public class Skater {
 	Texture img;
 	float showTime;
 
-	float targetX;
-	float targetY;
+	public float targetX;
+	public float targetY;
 	float deltaX;
 	float deltaY;
 	float originX;
@@ -119,9 +119,13 @@ public class Skater {
 	}
 	
 	//Sets Collision Logic?
-	public void collision(Rectangle hit) {
+	public void collision(float targX, float targY, float speed) {
 		cTime = 1000;
 		collided = true;
+	}
+	
+	public void bounce(float targX, float targY, float speed){
+	
 	}
 
 	public void changeTarget(float nx, float ny, SharpSkates game) {
