@@ -18,6 +18,8 @@ public class Skater {
 	public float targetY;
 	float deltaX;
 	float deltaY;
+
+  float modSpeed = 1;//Speed modifier, by default set to 1. Slow slide = .5 fast slide = 2
 	float originX;
 	float originY;
 
@@ -119,45 +121,55 @@ public class Skater {
 	}
 	
 	//Sets Collision Logic?
-	public void collision(float targX, float targY, float speed) {
+	public void collision(float targX, float targY, float speed, SharpSkates game) {
 		cTime = 1000;
 		collided = true;
+		modSpeed = speed;
+		playerMove(game);
 	}
 	
-	public void bounce(float targX, float targY, float speed){
-	
+	public void bounce(float targX, float targY, float speed, SharpSkates game){
+	  cTime = 250;
+		//collided = true;
+		modSpeed = speed;
+		playerMove(game);
 	}
 
 	public void changeTarget(float nx, float ny, SharpSkates game) {
 		double theta = Math.atan2((nx - x), (ny - y));
-		deltaX = (float)Math.sin(theta) * game.step;
-		deltaY = (float)Math.cos(theta) * game.step;
+		deltaX = (float)Math.sin(theta) * (game.step * modSpeed);
+		deltaY = (float)Math.cos(theta) * (game.step * modSpeed);
 		targetX = nx;
 		targetY = ny;
 	}
 
 	public void move(SharpSkates game, float delta, Array<Skater> skaterList) {
-		switch(kind) {
-			case Player:
-				playerMove(game, delta, skaterList);
-				break;
-			case Hooligan:
-				hooliganMove(game, delta, skaterList);
-				break;
-			case Girl:
-				girlMove(game, delta, skaterList);
-				break;
-			case Kid:
-				kidMove(game, delta, skaterList);
-				break;
-			default:
-				break;
+		if(cTime == 0){
+		  switch(kind) {
+			  case Player:
+				  playerMove(game);
+				  break;
+			  case Hooligan:
+				  hooliganMove(game, skaterList);
+				  break;
+			  case Girl:
+				  girlMove(game, delta);
+				  break;
+			  case Kid:
+				  kidMove(game);
+				  break;
+			  default:
+				  break;
+		  }
+		}else{
+		  cTime--;
+		  //Move
 		}
 	}
 
-	void playerMove(SharpSkates game, float delta, Array<Skater> skaterList) {
-		if(Math.abs(x - targetX) > game.step) x += deltaX;
-		if(Math.abs(y - targetY) > game.step) y += deltaY;
+	void playerMove(SharpSkates game) {
+		if(Math.abs(x - targetX) > game.step * modSpeed) x += deltaX;
+		if(Math.abs(y - targetY) > game.step * modSpeed) y += deltaY;
 
 		if(x < 0) x = 0;
 		if(x > game.width - size) x = game.width - size;
@@ -185,7 +197,7 @@ public class Skater {
 		skaterRectangle.y = this.y;
 	}
 
-	void hooliganMove(SharpSkates game, float delta, Array<Skater> skaterList) {
+	void hooliganMove(SharpSkates game, Array<Skater> skaterList) {
 		float closestTargetX = Float.MAX_VALUE;
 		float closestTargetY = Float.MAX_VALUE;
 		for(int i=0; i<skaterList.size; i++){
@@ -198,17 +210,17 @@ public class Skater {
 		}
 		changeTarget(closestTargetX, closestTargetY, game);
 
-		playerMove(game, delta, skaterList);
+		playerMove(game);
 	}
 
-	void girlMove(SharpSkates game, float delta, Array<Skater> skaterList) {
+	void girlMove(SharpSkates game, float delta) {
 		// TODO: girl movement logic
 		changeTarget(originX + (float)Math.sin(delta)*245,
 				originY + (float)Math.cos(delta)*108, game);
-		playerMove(game, delta, skaterList);
+		playerMove(game);
 	}
 
-	void kidMove(SharpSkates game, float delta, Array<Skater> skaterList) {
+	void kidMove(SharpSkates game) {
 		// TODO: kid movement logic
 	}
 }
