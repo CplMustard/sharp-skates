@@ -33,11 +33,12 @@ public class GameScreen implements Screen {
 	float deltaX;
 	float deltaY;
 
+
 	public GameScreen(final SharpSkates gam) {
 		this.game = gam;
 		// image to be used for sprite
 		img = new Texture("skater_a.png");
-		dude = new Skater(img, 32);
+		dude = new Skater(img, 32, Skater.Kind.Player);
 		// camera to allow for view
 		camera = new OrthographicCamera();
 		// false means y increases upward

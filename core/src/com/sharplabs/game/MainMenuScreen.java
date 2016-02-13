@@ -34,13 +34,13 @@ public class MainMenuScreen implements Screen {
 
 		// set up animation
 		dudeImg = new Texture("skater_a.png");
-		dude = new Skater(dudeImg, 32);
+		dude = new Skater(dudeImg, 32, Skater.Kind.Player);
 		grilImg = new Texture("girl.png");
-		gril = new Skater(grilImg, 32);
+		gril = new Skater(grilImg, 32, Skater.Kind.Girl);
 		hoodImg = new Texture("hooligan.png");
-		hood = new Skater(hoodImg, 32);
+		hood = new Skater(hoodImg, 32, Skater.Kind.Hooligan);
 		kidImg = new Texture("kid.png");
-		kid = new Skater(kidImg, 16);
+		kid = new Skater(kidImg, 16, Skater.Kind.Kid);
 
 		showTime = 0.0f;
 	}

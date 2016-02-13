@@ -25,6 +25,7 @@ public class Skater {
 	
 	public Rectangle skaterRectangle = new Rectangle();
 	public Direction dir;
+	public Kind kind;
 
 	public enum Direction {
 		Right,
@@ -34,7 +35,15 @@ public class Skater {
 		Wipeout
 	}
 
-	public Skater(final Texture image, int size) {
+	public enum Kind {
+		Player,
+		Hooligan,
+		Girl,
+		Kid
+	}
+
+	public Skater(final Texture image, int size, Kind type) {
+		this.kind = type;
 		this.size = size;
 		x = 0;
 		y = 0;
