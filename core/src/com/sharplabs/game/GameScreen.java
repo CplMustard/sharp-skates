@@ -30,10 +30,10 @@ public class GameScreen implements Screen {
 		camera.setToOrtho(false, game.width, game.height);
 		// game objects are rectangles
 		dude = new Rectangle();
-		dude.x = game.width/2 - 64/2;
+		dude.x = game.width/2 - game.spriteDim/2;
 		dude.y = 0;
-		dude.width = 64;
-		dude.height = 64;
+		dude.width = game.spriteDim;
+		dude.height = game.spriteDim;
 		
 		playTime = 0.0f;
 	}
