@@ -50,14 +50,8 @@ public class Skater {
 		this.kind = type;
 		this.size = size;
 		Random r = new Random();
-		float tmp = r.nextFloat();
-		tmp = tmp * game.width/2;
-		originX = tmp + game.width/4;
-//		originX = (float)((r.nextInt() % ((int)game.width/2 - size))) + game.width/4;
-		tmp = r.nextFloat();
-		tmp = tmp * game.width/2;
-		originY = tmp + game.height/4;
-//		originY = (float)((r.nextInt() % ((int)game.height/2 - size))) + game.height/4;
+		originX = r.nextFloat() * game.width/3 + game.width/4;
+		originY = r.nextFloat() * game.height/3 + game.height/4;
 		if(type == Kind.Player) {
 			x = game.width/2;
 			y = game.height/2;
