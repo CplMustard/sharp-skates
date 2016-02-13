@@ -126,13 +126,13 @@ public class GameScreen implements Screen {
 						    iSkate.collided = true;
 						    iSkate.cTime = 400;
 					    }
-					}else if((skaterList.get(i).kind == Skater.Kind.Kid && skaterList.get(i).collided == true && skaterList.get(j).kind == Skater.Kind.Girl) || (skaterList.get(j).kind == Skater.Kind.Kid && skaterList.get(i).kind == Skater.Kind.Girl && skaterList.get(i).collided == true)){                     //GIRL PUSH
-					if(skaterList.get(i).kind == Skater.Kind.Kid && skaterList.get(i).protect == false){
+					}else if((skaterList.get(i).kind == Skater.Kind.Kid && skaterList.get(i).collided == true && skaterList.get(j).kind == Skater.Kind.Girl) || (skaterList.get(j).kind == Skater.Kind.Kid && skaterList.get(i).kind == Skater.Kind.Girl && skaterList.get(j).collided == true)){                     //GIRL PUSH
+					if(skaterList.get(i).kind == Skater.Kind.Kid && skaterList.get(j).protect == false){
 					     jSkate.modSpeed = 2;
 					     jSkate.changeTarget(iTargetX, iTargetY, game);
 						 jSkate.collided = true;
 						 jSkate.cTime = 400;
-					}else if(skaterList.get(j).kind == Skater.Kind.Kid && skaterList.get(j).protect == false){
+					}else if(skaterList.get(j).kind == Skater.Kind.Kid && skaterList.get(i).protect == false){
 					     iSkate.modSpeed = 2;
 					     iSkate.changeTarget(jTargetX, jTargetY, game);
 						 iSkate.collided = true;
