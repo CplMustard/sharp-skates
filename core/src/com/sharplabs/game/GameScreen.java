@@ -138,7 +138,7 @@ public class GameScreen implements Screen {
 						  iSkate.collided = true;
 						  iSkate.cTime = 400;
 
-						  jSkate.mpdSpeed = 1;
+						  jSkate.modSpeed = 1;
 						  jSkate.changeTarget(iTargetX, iTargetY, game);
 						  jSkate.collided = true;
 						  jSkate.cTime = 400;
