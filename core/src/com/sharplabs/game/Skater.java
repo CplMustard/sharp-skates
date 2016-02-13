@@ -1,5 +1,7 @@
 package com.sharplabs.game;
 
+import java.lang.Math;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,12 +13,18 @@ public class Skater {
 	Texture img;
 	float showTime;
 
+	float targetX;
+	float targetY;
+	float deltaX;
+	float deltaY;
+
 	public int size;
 	public float x;
 	public float y;
 	public int cTime = 0;
 	
 	public Rectangle skaterRectangle = new Rectangle();
+	public Direction dir;
 
 	public enum Direction {
 		Right,
@@ -34,6 +42,8 @@ public class Skater {
 	  skaterRectangle.set(x,y,size,size);
 		// store the image
 		img = image;
+
+		dir = Direction.Right;
 
 		sprites = new Array();
 
@@ -82,4 +92,38 @@ public class Skater {
 	  cTime = 1000;
 	}
 
+	public void changeTarget(float nx, float ny, SharpSkates game) {
+		double theta = Math.atan2((nx - x), (ny - y));
+		deltaX = (float)Math.sin(theta) * game.step;
+		deltaY = (float)Math.cos(theta) * game.step;
+		targetX = nx;
+		targetY = ny;
+	}
+
+	public void move(SharpSkates game) {
+		if(Math.abs(x - targetX) > game.step) x += deltaX;
+		if(Math.abs(y - targetY) > game.step) y += deltaY;
+
+		if(x < 0) x = 0;
+		if(x > game.width - size) x = game.width - size;
+
+		if(y < 0) y = 0;
+		if(y > game.height - size) y = game.height - size;
+
+		float absX = Math.abs(deltaX);
+		float absY = Math.abs(deltaY);
+		if(absX > absY) {
+			if(deltaX > 0) {
+				dir = Direction.Right;
+			} else if(deltaX < 0) {
+				dir = Direction.Left;
+			}
+		} else if(absX < absY) {
+			if(deltaY > 0) {
+				dir = Direction.Up;
+			} else if(deltaY < 0) {
+				dir = Direction.Down;
+			}
+		}
+	}
 }

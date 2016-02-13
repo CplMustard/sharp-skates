@@ -33,8 +33,6 @@ public class GameScreen implements Screen {
 	float deltaX;
 	float deltaY;
 
-	Skater.Direction dir;
-
 	public GameScreen(final SharpSkates gam) {
 		this.game = gam;
 		// image to be used for sprite
@@ -51,8 +49,6 @@ public class GameScreen implements Screen {
 		targetY = 0;
 		deltaX = 0;
 		deltaY = 0;
-
-		dir = Skater.Direction.Right;
 	}
 
 	public void render(float delta) {
@@ -70,7 +66,7 @@ public class GameScreen implements Screen {
 		game.batch.setProjectionMatrix(camera.combined);
 		// set up batch
 		game.batch.begin();
-		game.batch.draw(dude.direction(dir).getKeyFrame(playTime, true), dude.x, dude.y);
+		game.batch.draw(dude.direction(dude.dir).getKeyFrame(playTime, true), dude.x, dude.y);
 		game.batch.end();
 
 		// handle touch/mouse input
@@ -80,13 +76,8 @@ public class GameScreen implements Screen {
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
 			// TODO: this should be some sort of "target position" instead
-			targetX = touchPos.x;
-			targetY = touchPos.y;
-			double theta = Math.atan2((targetX - dude.x), (targetY - dude.y));
-			deltaX = (float)Math.sin(theta) * game.step;
-			deltaY = (float)Math.cos(theta) * game.step;
+			dude.changeTarget(touchPos.x, touchPos.y, game);
 		}
-		
 		//Check Overlap
 		//Intersection will equal a rectangle at the point of interesction
 		for(int i = 0; i < skaterCount; i++){
@@ -131,8 +122,8 @@ public class GameScreen implements Screen {
 			} else if(deltaY < 0) {
 				dir = Skater.Direction.Down;
 			}
-		}
 
+		dude.move(game);
 	}
 
 	@Override
