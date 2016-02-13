@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -22,16 +23,12 @@ public class GameScreen implements Screen {
 	Skater dude;
 	OrthographicCamera camera;
 	float playTime;
+	Sprite bg;
 
 	//Char Tracker: Keeps Track of Sprites in Game
 	//Add new Skaters to this list (Suggestion: Set Player index 0)
 	public Array<Skater> skaterList = new Array();
 	int skaterCount = 0; 
-    
-	float targetX;
-	float targetY;
-	float deltaX;
-	float deltaY;
 
 
 	public GameScreen(final SharpSkates gam) {
@@ -44,12 +41,11 @@ public class GameScreen implements Screen {
 		// false means y increases upward
 		camera.setToOrtho(false, game.width, game.height);
 
-		playTime = 0;
+		bg = new Sprite(new Texture("background.png"));
+		bg.setCenter(game.width/2, game.height/2);
+		bg.scale(0.05f);
 
-		targetX = 0;
-		targetY = 0;
-		deltaX = 0;
-		deltaY = 0;
+		playTime = 0;
 	}
 
 	public void render(float delta) {
@@ -67,6 +63,7 @@ public class GameScreen implements Screen {
 		game.batch.setProjectionMatrix(camera.combined);
 		// set up batch
 		game.batch.begin();
+		bg.draw(game.batch);
 		game.batch.draw(dude.direction(dude.dir).getKeyFrame(playTime, true), dude.x, dude.y);
 		game.batch.end();
 
@@ -76,7 +73,6 @@ public class GameScreen implements Screen {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
-			// TODO: this should be some sort of "target position" instead
 			dude.changeTarget(touchPos.x, touchPos.y, game);
 		}
 		//Check Overlap
