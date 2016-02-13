@@ -40,17 +40,14 @@ public class GameScreen implements Screen {
 
 	public GameScreen(final SharpSkates gam) {
 		this.game = gam;
-		// image to be used for sprite
-		img = new Texture("skater_a.png");
-		dude = new Skater(img, 32, Skater.Kind.Player, game);
-		img2 = new Texture("girl.png");
-		gril = new Skater(img2, 32, Skater.Kind.Girl, game);
-		hoodImg = new Texture("hooligan.png");
-		hood = new Skater(hoodImg, 32, Skater.Kind.Hooligan, game);
-		kidImg = new Texture("kid.png");
-		kid = new Skater(kidImg, 16, Skater.Kind.Kid, game);
-
-		skaterList.add(gril);
+		// add skaters to list
+		skaterList.add(new Skater(new Texture("skater_a.png"), 32, Skater.Kind.Player, game));
+		skaterList.add(new Skater(new Texture("hooligan.png"), 32, Skater.Kind.Hooligan, game));
+		skaterList.add(new Skater(new Texture("hooligan.png"), 32, Skater.Kind.Hooligan, game));
+		skaterList.add(new Skater(new Texture("girl.png"), 32, Skater.Kind.Girl, game));
+		skaterList.add(new Skater(new Texture("kid.png"), 16, Skater.Kind.Kid, game));
+		skaterList.add(new Skater(new Texture("kid.png"), 16, Skater.Kind.Kid, game));
+		skaterCount = 6;
 
 		// camera to allow for view
 		camera = new OrthographicCamera();
@@ -80,10 +77,10 @@ public class GameScreen implements Screen {
 		// set up batch
 		game.batch.begin();
 		bg.draw(game.batch);
-		game.batch.draw(dude.direction(dude.dir).getKeyFrame(playTime, true), dude.x, dude.y);
-		game.batch.draw(gril.direction(gril.dir).getKeyFrame(playTime, true), gril.x, gril.y);
-		game.batch.draw(hood.direction(hood.dir).getKeyFrame(playTime, true), hood.x, hood.y);
-		game.batch.draw(kid.direction(kid.dir).getKeyFrame(playTime, true), kid.x, kid.y);
+		for(int i = 0; i < skaterCount; i++) {
+			Skater skate = skaterList.get(i);
+			game.batch.draw(skate.direction(skate.dir).getKeyFrame(playTime, true), skate.x, skate.y);
+		}
 		game.batch.end();
 
 		// handle touch/mouse input
@@ -92,7 +89,7 @@ public class GameScreen implements Screen {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
-			dude.changeTarget(touchPos.x, touchPos.y, game);
+			skaterList.get(0).changeTarget(touchPos.x, touchPos.y, game);
 		}
 
 		//Check Overlap
@@ -158,11 +155,9 @@ public class GameScreen implements Screen {
 				}
 			}
 		}
-
-		dude.move(game, playTime, skaterList);
-		gril.move(game, playTime, skaterList);
-		hood.move(game, playTime, skaterList);
-		kid.move(game, playTime, skaterList);
+		for(int i = 0; i < skaterCount; i++) {
+			skaterList.get(i).move(game, playTime, skaterList);
+		}
 	}
 
 	@Override
