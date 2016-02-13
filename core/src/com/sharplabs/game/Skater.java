@@ -198,7 +198,7 @@ public class Skater {
 		float closestTargetY = Float.MAX_VALUE;
 		for(int i=0; i<skaterList.size; i++){
 			if(skaterList.get(i).kind == Kind.Girl){
-				if(Math.abs((y - skaterList.get(i).y)/(x - skaterList.get(i).x)) < Math.abs((y - closestTargetY)/(x - closestTargetX))){
+				if(Math.abs((y - skaterList.get(i).y) + (x - skaterList.get(i).x)) < Math.abs((y - closestTargetY) + (x - closestTargetX))){
 					closestTargetX = skaterList.get(i).x;
 					closestTargetY = skaterList.get(i).y;
 				}
