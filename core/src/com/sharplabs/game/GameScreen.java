@@ -102,125 +102,141 @@ public class GameScreen implements Screen {
 			for(int j = i+1; j < skaterCount; j++){
 				Rectangle intersection = new Rectangle(0,0,0,0);
 				intersector.intersectRectangles(skaterList.get(i).skaterRectangle, skaterList.get(j).skaterRectangle, intersection);
-				if(intersection.getHeight() != 0 && skaterList.get(i).collided == false && skaterList.get(j).collided == false){
-				  System.out.println("Collision");
-				  float iTargetX = skaterList.get(i).targetX;
+				if(intersection.getHeight() != 0 ){
+				
+				    System.out.println("Collision");
+				    
+				    float iTargetX = skaterList.get(i).targetX;
 					float iTargetY = skaterList.get(i).targetY;
 					float jTargetX = skaterList.get(j).targetX;
 					float jTargetY = skaterList.get(j).targetY;
+					
 					Skater iSkate = skaterList.get(i);
 					Skater jSkate = skaterList.get(j);
+					
 					if(skaterList.get(i).collided == true || skaterList.get(j).collided == true){
 					  System.out.println("Collided Check");
-					  if(skaterList.get(i).collided == true && skaterList.get(j).collided == true){
-					    //BOTH COLLIDED: Bounce
-					    //skaterList.get(i).collision(jTargetX,jTargetY,(float)1,game);
-					    //skaterList.get(j).collision(iTargetX,iTargetY,(float)1,game);
-						  iSkate.modSpeed = 1;
-						iSkate.changeTarget(jTargetX, jTargetY, game);
-						iSkate.collided = true;
-						iSkate.cTime = 400;
-
-						jSkate.modSpeed = 1;
-						jSkate.changeTarget(iTargetX, iTargetY, game);
-						jSkate.collided = true;
-						jSkate.cTime = 400;
-					  }else if(skaterList.get(i).collided == true && skaterList.get(i).kind == Skater.Kind.Kid){
-					    //I IS COLLIDED KID -> J: J goes flying
-					    //skaterList.get(i).collision(jTargetX,jTargetY,(float)0.5,game);
-					    //skaterList.get(j).collision(iTargetX,iTargetY,(float)2,game);
-						iSkate.modSpeed = 0.5f;
-						iSkate.changeTarget(jTargetX, jTargetY, game);
-						iSkate.collided = true;
-						iSkate.cTime = 400;
-
-						jSkate.modSpeed = 2;
-						jSkate.changeTarget(iTargetX, iTargetY, game);
-						jSkate.collided = true;
-						jSkate.cTime = 400;
-					  }else if(skaterList.get(j).collided == true && skaterList.get(j).kind == Skater.Kind.Kid){
-					    //J IS COLLIDED KID -> I: I goes flying
-					    //skaterList.get(i).collision(jTargetX,jTargetY,(float)2,game);
-					    //skaterList.get(j).collision(iTargetX,iTargetY,(float)0.5,game);
-						iSkate.modSpeed = 2;
-						iSkate.changeTarget(jTargetX, jTargetY, game);
-						iSkate.collided = true;
-						iSkate.cTime = 400;
-
-						jSkate.modSpeed = 0.5f;
-						jSkate.changeTarget(iTargetX, iTargetY, game);
-						jSkate.collided = true;
-						jSkate.cTime = 400;
-					  }else if(skaterList.get(i).collided == true && skaterList.get(i).kind != Skater.Kind.Kid){
-					    //I IS COLLIDED ADULT -> J: J slides
-					    //skaterList.get(i).collision(jTargetX,jTargetY,(float)0.5,game);
-					    //skaterList.get(j).collision(iTargetX,iTargetY,(float)1,game);
-						iSkate.modSpeed = 0.5f;
-						iSkate.changeTarget(jTargetX, jTargetY, game);
-						iSkate.collided = true;
-						iSkate.cTime = 400;
-
-						jSkate.modSpeed = 1;
-						jSkate.changeTarget(iTargetX, iTargetY, game);
-						jSkate.collided = true;
-						jSkate.cTime = 400;
-					  }else if(skaterList.get(j).collided == true && skaterList.get(j).kind != Skater.Kind.Kid){
-					    //J IS COLLIDED ADULT -> I: I slides
-					    //skaterList.get(i).collision(jTargetX,jTargetY,(float)1,game);
-					    //skaterList.get(j).collision(iTargetX,iTargetY,(float)0.5,game);
-						iSkate.modSpeed = 1;
-						iSkate.changeTarget(jTargetX, jTargetY, game);
-						iSkate.collided = true;
-						iSkate.cTime = 400;
-
-						jSkate.modSpeed = 0.5f;
-						jSkate.changeTarget(iTargetX, iTargetY, game);
-						jSkate.collided = true;
-						jSkate.cTime = 400;
+					  if((skaterList.get(i).collided == false && skaterList.get(i).kind == Skater.Kind.Player && skaterList.get(j).collided == true && skaterList.get(j).kind == Skater.Kind.Kid) || (skaterList.get(i).collided == true && skaterList.get(j).kind == Skater.Kind.Kid && skaterList.get(j).collided == false && skaterList.get(j).kind == Skater.Kind.Player)){
+					    if(skaterList.get(i).kind == Skater.Kind.Player){
+					        jSkate.modSpeed = 2;
+					        jSkate.changeTarget(iTargetX, iTargetY, game);
+						    jSkate.collided = true;
+						    jSkate.cTime = 400;
+					    }else{
+					        iSkate.modSpeed = 2;
+					        iSkate.changeTarget(jTargetX, jTargetY, game);
+						    iSkate.collided = true;
+						    iSkate.cTime = 400;
+					    }					  
 					  }
-					}else if(skaterList.get(i).kind == Skater.Kind.Kid ^ skaterList.get(j).kind == Skater.Kind.Kid){
-					    //KIDvsNON-KID: kid careens
-					    System.out.println(skaterList.get(i).kind);
-					    if(skaterList.get(i).kind == Skater.Kind.Kid){
-					      //KID INDEX I
-					      //skaterList.get(i).collision(jTargetX,jTargetY,(float)2,game);
+					  else if(skaterList.get(i).collided == true && skaterList.get(j).collided == true){
+					      //BOTH COLLIDED: Bounce
+					      //skaterList.get(i).collision(jTargetX,jTargetY,(float)1,game);
+					      //skaterList.get(j).collision(iTargetX,iTargetY,(float)1,game);
+						  iSkate.modSpeed = 1;
+						  iSkate.changeTarget(jTargetX, jTargetY, game);
+						  iSkate.collided = true;
+						  iSkate.cTime = 400;
+						  iSkate.modSpeed = 1;
+
+						  jSkate.changeTarget(iTargetX, iTargetY, game);
+						  jSkate.collided = true;
+						  jSkate.cTime = 400;
+					  }else if(skaterList.get(i).collided == true && skaterList.get(i).kind == Skater.Kind.Kid){
+					      //I IS COLLIDED KID -> J: J goes flying
+					      //skaterList.get(i).collision(jTargetX,jTargetY,(float)0.5,game);
+					      //skaterList.get(j).collision(iTargetX,iTargetY,(float)2,game);
+						    iSkate.modSpeed = 0.5f;
+						    iSkate.changeTarget(jTargetX, jTargetY, game);
+						    iSkate.collided = true;
+						    iSkate.cTime = 400;
+
+						    jSkate.modSpeed = 2;
+						    jSkate.changeTarget(iTargetX, iTargetY, game);
+						    jSkate.collided = true;
+						    jSkate.cTime = 400;
+					    }else if(skaterList.get(j).collided == true && skaterList.get(j).kind == Skater.Kind.Kid){
+					        //J IS COLLIDED KID -> I: I goes flying
+					        //skaterList.get(i).collision(jTargetX,jTargetY,(float)2,game);
+					        //skaterList.get(j).collision(iTargetX,iTargetY,(float)0.5,game);
+						    iSkate.modSpeed = 2;
+						    iSkate.changeTarget(jTargetX, jTargetY, game);
+						    iSkate.collided = true;
+						    iSkate.cTime = 400;
+
+						    jSkate.modSpeed = 0.5f;
+						    jSkate.changeTarget(iTargetX, iTargetY, game);
+						    jSkate.collided = true;
+						    jSkate.cTime = 400;
+					  }else if(skaterList.get(i).collided == true && skaterList.get(i).kind != Skater.Kind.Kid){
+					        //I IS COLLIDED ADULT -> J: J slides
+					        //skaterList.get(i).collision(jTargetX,jTargetY,(float)0.5,game);
+					        //skaterList.get(j).collision(iTargetX,iTargetY,(float)1,game);
+						    iSkate.modSpeed = 0.5f;
+						    iSkate.changeTarget(jTargetX, jTargetY, game);
+						    iSkate.collided = true;
+						    iSkate.cTime = 400;
+
+						    jSkate.modSpeed = 1;
+						    jSkate.changeTarget(iTargetX, iTargetY, game);
+						    jSkate.collided = true;
+						    jSkate.cTime = 400;
+					  }else if(skaterList.get(j).collided == true && skaterList.get(j).kind != Skater.Kind.Kid){
+					        //J IS COLLIDED ADULT -> I: I slides
+					        //skaterList.get(i).collision(jTargetX,jTargetY,(float)1,game);
+					        //skaterList.get(j).collision(iTargetX,iTargetY,(float)0.5,game);
+						    iSkate.modSpeed = 1;
+						    iSkate.changeTarget(jTargetX, jTargetY, game);
+						    iSkate.collided = true;
+						    iSkate.cTime = 400;
+
+						    jSkate.modSpeed = 0.5f;
+						    jSkate.changeTarget(iTargetX, iTargetY, game);
+						    jSkate.collided = true;
+						    jSkate.cTime = 400;
+					  }
+				}else if(skaterList.get(i).kind == Skater.Kind.Kid ^ skaterList.get(j).kind == Skater.Kind.Kid){
+					   //KIDvsNON-KID: kid careens
+					   System.out.println(skaterList.get(i).kind);
+					   if(skaterList.get(i).kind == Skater.Kind.Kid){
+					        //KID INDEX I
+					        //skaterList.get(i).collision(jTargetX,jTargetY,(float)2,game);
 							iSkate.modSpeed = 2;
 							iSkate.changeTarget(jTargetX, jTargetY, game);
 							iSkate.collided = true;
 							iSkate.cTime = 400;
-					      //skaterList.get(j).bounce(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)1); //DOES NOT COLLIDE keeps going
+					        //skaterList.get(j).bounce(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)1); //DOES NOT COLLIDE keeps going
 					    }else if(skaterList.get(j).kind == Skater.Kind.Kid){
-					      //KID INDEX J
-					      //skaterList.get(i).bounce(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)1); //DOES NOT COLLIDE kees going
-					    //  skaterList.get(j).collision(iTargetX,iTargetY,(float)2,game);
+					        //KID INDEX J
+					        //skaterList.get(i).bounce(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)1); //DOES NOT COLLIDE kees going
+					        //skaterList.get(j).collision(iTargetX,iTargetY,(float)2,game);
 							jSkate.modSpeed = 2;
 							jSkate.changeTarget(iTargetX, iTargetY, game);
 							jSkate.collided = true;
 							jSkate.cTime = 400;
-
 					    }
-					}else if((skaterList.get(i).kind == Skater.Kind.Player || skaterList.get(j).kind == Skater.Kind.Player) && (skaterList.get(i).kind == Skater.Kind.Hooligan || skaterList.get(j).kind == Skater.Kind.Hooligan)){
+				}else if((skaterList.get(i).kind == Skater.Kind.Player || skaterList.get(j).kind == Skater.Kind.Player) && (skaterList.get(i).kind == Skater.Kind.Hooligan || skaterList.get(j).kind == Skater.Kind.Hooligan)){
 					    //HOOLIGAN PLAYER: Player falls
 					    if(skaterList.get(i).kind == Skater.Kind.Player){
-					      //KID INDEX I
-					      //skaterList.get(i).collision(jTargetX,jTargetY,(float)0.5,game);
+					        //KID INDEX I
+					        //skaterList.get(i).collision(jTargetX,jTargetY,(float)0.5,game);
 							iSkate.modSpeed = 0.5f;
 							iSkate.changeTarget(jTargetX, jTargetY, game);
 							iSkate.collided = true;
 							iSkate.cTime = 400;
 
-					      //skaterList.get(j).bounce(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)1); //DOES NOT COLLIDE keeps going
+					        //skaterList.get(j).bounce(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)1); //DOES NOT COLLIDE keeps going
 					    }else if(skaterList.get(j).kind == Skater.Kind.Player){
-					      //KID INDEX J
-					      //skaterList.get(i).bounce(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)1); //DOES NOT COLLIDE kees going
-					      //skaterList.get(j).collision(iTargetX,iTargetY,(float)0.5,game);
+					        //KID INDEX J
+					        //skaterList.get(i).bounce(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)1); //DOES NOT COLLIDE kees going
+					        //skaterList.get(j).collision(iTargetX,iTargetY,(float)0.5,game);
 							jSkate.modSpeed = 0.5f;
 							jSkate.changeTarget(iTargetX, iTargetY, game);
 							jSkate.collided = true;
 							jSkate.cTime = 400;
 
 					    }
-					}else if(skaterList.get(i).kind == Skater.Kind.Kid && skaterList.get(j).kind == Skater.Kind.Kid){
+				}else if(skaterList.get(i).kind == Skater.Kind.Kid && skaterList.get(j).kind == Skater.Kind.Kid){
 					    //CHILD CHILD: Child Bounce
 					    //skaterList.get(i).bounce(jTargetX,jTargetY,(float)1,game);
 					    //skaterList.get(j).bounce(iTargetX,iTargetY,(float)1,game);
@@ -231,7 +247,7 @@ public class GameScreen implements Screen {
 						jSkate.changeTarget(iTargetX, iTargetY, game);
 						jSkate.cTime = 200;
 
-					}else{
+				}/*else{
 					    //ADULTvsADULT: Both fall slow slide
 //					    skaterList.get(i).collision(jTargetX,jTargetY,(float)0.5,game);
 //					    skaterList.get(j).collision(iTargetX,iTargetY,(float)0.5,game);
@@ -244,10 +260,11 @@ public class GameScreen implements Screen {
 							jSkate.changeTarget(iTargetX, iTargetY, game);
 							jSkate.collided = true;
 							jSkate.cTime = 400;
-					}									    
+					}*/									    
 				}
 			}
 		}
+		
 		for(int i = 0; i < skaterCount; i++) {
 			skaterList.get(i).move(game, playTime, skaterList);
 		}
