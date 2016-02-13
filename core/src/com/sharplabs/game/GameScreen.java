@@ -18,16 +18,6 @@ import com.badlogic.gdx.math.Intersector;
 
 public class GameScreen implements Screen {
 	final SharpSkates game;
-
-	Texture img;
-	Texture img2;
-	Skater dude;
-	Skater gril;
-	Skater hood;
-	Skater kid;
-	Texture grilImg;
-	Texture hoodImg;
-	Texture kidImg;
 	OrthographicCamera camera;
 	float playTime;
 	Sprite bg;
@@ -183,6 +173,5 @@ public class GameScreen implements Screen {
 	@Override
 	public void dispose() {
 		// dispose of native assets
-		img.dispose();
 	}
 }
