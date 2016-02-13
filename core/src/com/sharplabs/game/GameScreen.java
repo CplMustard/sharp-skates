@@ -20,7 +20,9 @@ public class GameScreen implements Screen {
 	final SharpSkates game;
 
 	Texture img;
+	Texture img2;
 	Skater dude;
+	Skater gril;
 	OrthographicCamera camera;
 	float playTime;
 	Sprite bg;
@@ -35,7 +37,10 @@ public class GameScreen implements Screen {
 		this.game = gam;
 		// image to be used for sprite
 		img = new Texture("skater_a.png");
-		dude = new Skater(img, 32, Skater.Kind.Player);
+		dude = new Skater(img, 32, Skater.Kind.Player, game);
+		img2 = new Texture("girl.png");
+		gril = new Skater(img2, 32, Skater.Kind.Girl, game);
+
 		// camera to allow for view
 		camera = new OrthographicCamera();
 		// false means y increases upward
@@ -65,6 +70,7 @@ public class GameScreen implements Screen {
 		game.batch.begin();
 		bg.draw(game.batch);
 		game.batch.draw(dude.direction(dude.dir).getKeyFrame(playTime, true), dude.x, dude.y);
+		game.batch.draw(gril.direction(gril.dir).getKeyFrame(playTime, true), gril.x, gril.y);
 		game.batch.end();
 
 		// handle touch/mouse input
@@ -75,6 +81,7 @@ public class GameScreen implements Screen {
 			camera.unproject(touchPos);
 			dude.changeTarget(touchPos.x, touchPos.y, game);
 		}
+
 		//Check Overlap
 		//Intersection will equal a rectangle at the point of interesction
 		for(int i = 0; i < skaterCount; i++){
@@ -107,7 +114,8 @@ public class GameScreen implements Screen {
 			}
 		}
 
-		dude.move(game);
+		dude.move(game, playTime);
+		gril.move(game, playTime);
 	}
 
 	@Override
