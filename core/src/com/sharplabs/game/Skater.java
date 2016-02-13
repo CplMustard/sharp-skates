@@ -117,6 +117,25 @@ public class Skater {
 	}
 
 	public void move(SharpSkates game) {
+		switch(kind) {
+			case Player:
+				playerMove(game);
+				break;
+			case Hooligan:
+				hooliganMove(game);
+				break;
+			case Girl:
+				girlMove(game);
+				break;
+			case Kid:
+				kidMove(game);
+				break;
+			default:
+				break;
+		}
+	}
+
+	void playerMove(SharpSkates game) {
 		if(Math.abs(x - targetX) > game.step) x += deltaX;
 		if(Math.abs(y - targetY) > game.step) y += deltaY;
 
@@ -141,5 +160,17 @@ public class Skater {
 				dir = Direction.Down;
 			}
 		}
+	}
+
+	void hooliganMove(SharpSkates game) {
+		// TODO: hooligan movement logic
+	}
+
+	void girlMove(SharpSkates game) {
+		// TODO: girl movement logic
+	}
+
+	void kidMove(SharpSkates game) {
+		// TODO: kid movement logic
 	}
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 
 public class MainMenuScreen implements Screen {
@@ -23,6 +24,9 @@ public class MainMenuScreen implements Screen {
 	Texture kidImg;
 	Array<TextureRegion> reg;
 	float showTime;
+	Sprite bg;
+	Sprite title;
+
 
 	public MainMenuScreen(final SharpSkates gam) {
 		// store game
@@ -42,7 +46,15 @@ public class MainMenuScreen implements Screen {
 		kidImg = new Texture("kid.png");
 		kid = new Skater(kidImg, 16, Skater.Kind.Kid);
 
-		showTime = 0.0f;
+		bg = new Sprite(new Texture("background.png"));
+		bg.setCenter(game.width/2 - 64, game.height/2);
+		bg.scale(0.05f);
+
+		title = new Sprite(new Texture("title.png"));
+		title.setCenter(game.width/2 - 64, game.height/2);
+		title.scale(0.05f);
+
+		showTime = 0;
 	}
 
 	public void render(float delta) {
@@ -52,6 +64,7 @@ public class MainMenuScreen implements Screen {
 
 		camera.update();
 		game.batch.begin();
+		bg.draw(game.batch);
 		game.font.draw(game.batch, "Welcome to Sharp Skate", 100, 150);
 		game.font.draw(game.batch, "Tap anywhere to begin", 100, 100);
 		game.batch.draw(dude.direction(Skater.Direction.Left).getKeyFrame(showTime, true), 100, 240);
@@ -74,6 +87,7 @@ public class MainMenuScreen implements Screen {
 		game.batch.draw(kid.direction(Skater.Direction.Down).getKeyFrame(showTime, true), 300, 400);
 		game.batch.draw(kid.direction(Skater.Direction.Right).getKeyFrame(showTime, true), 400, 400);
 		game.batch.draw(kid.direction(Skater.Direction.Wipeout).getKeyFrame(showTime, true), 500, 400);
+		title.draw(game.batch);
 		game.batch.end();
 
 		if(Gdx.input.isTouched()) {
