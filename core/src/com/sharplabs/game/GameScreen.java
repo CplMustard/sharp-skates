@@ -101,23 +101,55 @@ public class GameScreen implements Screen {
 					if(skaterList.get(i).collided == true || skaterList.get(j).collided == true){
 					  if(skaterList.get(i).collided == true && skaterList.get(j).collided == true){
 					    //BOTH COLLIDED: Bounce 
+					    skaterList.get(i).collision(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)1);
+					    skaterList.get(j).collision(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)1);
 					  }else if(skaterList.get(i).collided == true && skaterList.get(i).kind == Skater.Kind.Kid){
-					    //I COLLIDED -> KID: Other goes flying
+					    //I IS COLLIDED KID -> J: J goes flying
+					    skaterList.get(i).collision(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)0.5);
+					    skaterList.get(j).collision(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)2);
 					  }else if(skaterList.get(j).collided == true && skaterList.get(j).kind == Skater.Kind.Kid){
-					    //J COLLIDED -> KID: Other goes flying
+					    //J IS COLLIDED KID -> I: I goes flying
+					    skaterList.get(i).collision(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)2);
+					    skaterList.get(j).collision(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)0.5);
 					  }else if(skaterList.get(i).collided == true && skaterList.get(i).kind != Skater.Kind.Kid){
-					    //I COLLIDED -> ADULT: Other goes slow
+					    //I IS COLLIDED ADULT -> J: J slides
+					    skaterList.get(i).collision(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)0.5);
+					    skaterList.get(j).collision(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)1);
 					  }else if(skaterList.get(j).collided == true && skaterList.get(j).kind != Skater.Kind.Kid){
-					    //J COLLIDED -> ADULT: Other goes slow
+					    //J IS COLLIDED ADULT -> I: I slides
+					    skaterList.get(i).collision(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)1);
+					    skaterList.get(j).collision(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)0.5);
 					  }
-					}else if(skaterList.get(i).kind == Skater.Kind.Kid ^ skaterList.get(i).kind == Skater.Kind.Kid){
+					}else if(skaterList.get(i).kind == Skater.Kind.Kid ^ skaterList.get(j).kind == Skater.Kind.Kid){
 					    //KIDvsNON-KID: kid careens
+					    if(skaterList.get(i).kind == Skater.Kind.Kid){
+					      //KID INDEX I
+					      skaterList.get(i).collision(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)2);
+					      //skaterList.get(j).bounce(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)1); //DOES NOT COLLIDE keeps going
+					    }else if(skaterList.get(j).kind == Skater.Kind.Kid){
+					      //KID INDEX J
+					      //skaterList.get(i).bounce(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)1); //DOES NOT COLLIDE kees going
+					      skaterList.get(j).collision(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)2);
+					    }
 					}else if((skaterList.get(i).kind == Skater.Kind.Player || skaterList.get(i).kind == Skater.Kind.Player) && (skaterList.get(i).kind == Skater.Kind.Hooligan || skaterList.get(i).kind == Skater.Kind.Hooligan)){
 					    //HOOLIGAN PLAYER: Player falls
+					    if(skaterList.get(i).kind == Skater.Kind.Player){
+					      //KID INDEX I
+					      skaterList.get(i).collision(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)0.5);
+					      //skaterList.get(j).bounce(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)1); //DOES NOT COLLIDE keeps going
+					    }else if(skaterList.get(j).kind == Skater.Kind.Player){
+					      //KID INDEX J
+					      //skaterList.get(i).bounce(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)1); //DOES NOT COLLIDE kees going
+					      skaterList.get(j).collision(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)0.5);
+					    }
 					}else if(skaterList.get(i).kind == Skater.Kind.Kid && skaterList.get(j).kind == Skater.Kind.Kid){
 					    //CHILD CHILD: Child Bounce
+					    skaterList.get(i).bounce(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)1);
+					    skaterList.get(j).bounce(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)1);
 					}else{
-					    //ADULTvsADULT: Both fall slow slide 
+					    //ADULTvsADULT: Both fall slow slide
+					    skaterList.get(i).collision(skaterList.get(j).targetX,skaterList.get(j).targetY,(float)0.5);
+					    skaterList.get(j).collision(skaterList.get(i).targetX,skaterList.get(i).targetY,(float)0.5);
 					}									    
 				}
 			}
