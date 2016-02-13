@@ -245,7 +245,69 @@ public class Skater {
 	void girlMove(SharpSkates game, float delta) {
 		changeTarget(originX + (float)Math.sin(delta)*245,
 				originY + (float)Math.cos(delta)*108, game);
-		playerMove(game);
+
+		if(Math.abs(x - targetX) > game.step * modSpeed) {
+			x += deltaX;
+		} else {
+			x -= deltaX;
+		}
+		if(Math.abs(y - targetY) > game.step * modSpeed) {
+			y += deltaY;
+		} else {
+			y -= deltaY;
+		}
+
+		if(x < 0) {
+		  if(dir == Direction.Wipeout) {
+		    cTime = 0;
+		  } else {
+		    x = 0;
+		  }
+		}
+		if(x > game.width - size) {
+		  if(dir == Direction.Wipeout) {
+		    cTime = 0;
+		  } else {
+		    x = game.width - size;
+		  }
+		}
+
+		if(y < 0) {
+		  if(dir == Direction.Wipeout) {
+		    cTime = 0;
+		  } else {
+		    y = 0;
+		  }
+		}
+		if(y > game.height - size) {
+		  if(dir == Direction.Wipeout) {
+		    cTime = 0;
+		  } else {
+		    y = game.height - size;
+		  }
+		}
+
+		float absX = Math.abs(deltaX);
+		float absY = Math.abs(deltaY);
+		if(dir != Direction.Wipeout) {
+		  if(absX > absY) {
+			  if(deltaX > 0) {
+				  dir = Direction.Right;
+			  } else if(deltaX < 0) {
+				  dir = Direction.Left;
+			  }
+		  } else if(absX < absY) {
+			  if(deltaY > 0) {
+				  dir = Direction.Up;
+			  } else if(deltaY < 0) {
+				  dir = Direction.Down;
+			  }
+		  }
+		}
+
+		skaterRectangle.x = this.x;
+		skaterRectangle.y = this.y;
+
 	}
 
 	void kidMove(SharpSkates game) {
