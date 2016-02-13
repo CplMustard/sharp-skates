@@ -56,6 +56,7 @@ public class GameScreen implements Screen {
 		camera.setToOrtho(false, game.width, game.height);
 
 		bg = new Sprite(new Texture("background.png"));
+		bg.setSize(game.width, game.height);
 		bg.setCenter(game.width/2, game.height/2);
 		bg.scale(0.05f);
 
