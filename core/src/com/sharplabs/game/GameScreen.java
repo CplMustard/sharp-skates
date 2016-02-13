@@ -110,12 +110,12 @@ public class GameScreen implements Screen {
 					  if((skaterList.get(i).collided == false && skaterList.get(i).kind == Skater.Kind.Player && skaterList.get(j).collided == true && skaterList.get(j).kind == Skater.Kind.Kid) || (skaterList.get(i).collided == true && skaterList.get(j).kind == Skater.Kind.Kid && skaterList.get(j).collided == false && skaterList.get(j).kind == Skater.Kind.Player)){
 					    if(skaterList.get(i).kind == Skater.Kind.Player){
 					        jSkate.modSpeed = 2;
-					        jSkate.changeTarget(iTargetX, iTargetY, game);
+					        jSkate.changeTarget(iTargetX * 1.25f, iTargetY * 1.25f, game);
 						    jSkate.collided = true;
 						    jSkate.cTime = 400;
 					    }else{
 					        iSkate.modSpeed = 2;
-					        iSkate.changeTarget(jTargetX, jTargetY, game);
+					        iSkate.changeTarget(jTargetX * 1.25f, jTargetY * 1.25f, game);
 						    iSkate.collided = true;
 						    iSkate.cTime = 400;
 					    }					  
@@ -143,7 +143,7 @@ public class GameScreen implements Screen {
 						    iSkate.cTime = 400;
 
 						    jSkate.modSpeed = 2;
-						    jSkate.changeTarget(iTargetX, iTargetY, game);
+						    jSkate.changeTarget(iTargetX * 5, iTargetY * 5, game);
 						    jSkate.collided = true;
 						    jSkate.cTime = 400;
 					    }else if(skaterList.get(j).collided == true && skaterList.get(j).kind == Skater.Kind.Kid){
@@ -151,7 +151,7 @@ public class GameScreen implements Screen {
 					        //skaterList.get(i).collision(jTargetX,jTargetY,(float)2,game);
 					        //skaterList.get(j).collision(iTargetX,iTargetY,(float)0.5,game);
 						    iSkate.modSpeed = 2;
-						    iSkate.changeTarget(jTargetX, jTargetY, game);
+						    iSkate.changeTarget(jTargetX * 5, jTargetY * 5, game);
 						    iSkate.collided = true;
 						    iSkate.cTime = 400;
 
