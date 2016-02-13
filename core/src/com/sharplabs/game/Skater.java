@@ -239,13 +239,6 @@ public class Skater {
 		}
 		changeTarget(closestTargetX, closestTargetY, game);
 
-		playerMove(game);
-	}
-
-	void girlMove(SharpSkates game, float delta) {
-		changeTarget(originX + (float)Math.sin(delta)*245,
-				originY + (float)Math.cos(delta)*108, game);
-
 		if(Math.abs(x - targetX) > game.step * modSpeed) {
 			x += deltaX;
 		} else {
@@ -307,7 +300,13 @@ public class Skater {
 
 		skaterRectangle.x = this.x;
 		skaterRectangle.y = this.y;
+	}
 
+	void girlMove(SharpSkates game, float delta) {
+		changeTarget(originX + (float)Math.sin(delta)*245,
+				originY + (float)Math.cos(delta)*108, game);
+
+		playerMove(game);
 	}
 
 	void kidMove(SharpSkates game) {
