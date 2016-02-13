@@ -180,18 +180,20 @@ public class Skater {
 
 		float absX = Math.abs(deltaX);
 		float absY = Math.abs(deltaY);
-		if(absX > absY) {
-			if(deltaX > 0) {
-				dir = Direction.Right;
-			} else if(deltaX < 0) {
-				dir = Direction.Left;
-			}
-		} else if(absX < absY) {
-			if(deltaY > 0) {
-				dir = Direction.Up;
-			} else if(deltaY < 0) {
-				dir = Direction.Down;
-			}
+		if(dir != Direction.Wipeout) {
+		  if(absX > absY) {
+			  if(deltaX > 0) {
+				  dir = Direction.Right;
+			  } else if(deltaX < 0) {
+				  dir = Direction.Left;
+			  }
+		  } else if(absX < absY) {
+			  if(deltaY > 0) {
+				  dir = Direction.Up;
+			  } else if(deltaY < 0) {
+				  dir = Direction.Down;
+			  }
+		  }
 		}
 
 		skaterRectangle.x = this.x;
