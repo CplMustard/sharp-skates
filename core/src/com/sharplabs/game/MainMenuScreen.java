@@ -13,8 +13,14 @@ public class MainMenuScreen implements Screen {
 	final SharpSkates game;
 
 	OrthographicCamera camera;
-	Animation dude;
-	Texture img;
+	Skater dude;
+	Skater gril;
+	Skater hood;
+	Skater kid;
+	Texture dudeImg;
+	Texture grilImg;
+	Texture hoodImg;
+	Texture kidImg;
 	Array<TextureRegion> reg;
 	float showTime;
 
@@ -27,12 +33,14 @@ public class MainMenuScreen implements Screen {
 		camera.setToOrtho(false, game.width, game.height);
 
 		// set up animation
-		img = new Texture("skater_a.png");
-		reg = new Array();
-		// first column, both rows
-		reg.add(new TextureRegion(img, 0, 0, 32, 32));
-		reg.add(new TextureRegion(img, 0, 32, 32, 32));
-		dude = new Animation(0.6f, reg);
+		dudeImg = new Texture("skater_a.png");
+		dude = new Skater(dudeImg, 32);
+		grilImg = new Texture("girl.png");
+		gril = new Skater(grilImg, 32);
+		hoodImg = new Texture("hooligan.png");
+		hood = new Skater(hoodImg, 32);
+		kidImg = new Texture("kid.png");
+		kid = new Skater(kidImg, 16);
 
 		showTime = 0.0f;
 	}
@@ -46,7 +54,26 @@ public class MainMenuScreen implements Screen {
 		game.batch.begin();
 		game.font.draw(game.batch, "Welcome to Sharp Skate", 100, 150);
 		game.font.draw(game.batch, "Tap anywhere to begin", 100, 100);
-		game.batch.draw(dude.getKeyFrame(showTime, true), 400, 240);
+		game.batch.draw(dude.direction(Skater.Direction.Left).getKeyFrame(showTime, true), 100, 240);
+		game.batch.draw(dude.direction(Skater.Direction.Up).getKeyFrame(showTime, true), 200, 240);
+		game.batch.draw(dude.direction(Skater.Direction.Down).getKeyFrame(showTime, true), 300, 240);
+		game.batch.draw(dude.direction(Skater.Direction.Right).getKeyFrame(showTime, true), 400, 240);
+		game.batch.draw(dude.direction(Skater.Direction.Wipeout).getKeyFrame(showTime, true), 500, 240);
+		game.batch.draw(gril.direction(Skater.Direction.Left).getKeyFrame(showTime, true), 100, 320);
+		game.batch.draw(gril.direction(Skater.Direction.Up).getKeyFrame(showTime, true), 200, 320);
+		game.batch.draw(gril.direction(Skater.Direction.Down).getKeyFrame(showTime, true), 300, 320);
+		game.batch.draw(gril.direction(Skater.Direction.Right).getKeyFrame(showTime, true), 400, 320);
+		game.batch.draw(gril.direction(Skater.Direction.Wipeout).getKeyFrame(showTime, true), 500, 320);
+		game.batch.draw(hood.direction(Skater.Direction.Left).getKeyFrame(showTime, true), 100, 160);
+		game.batch.draw(hood.direction(Skater.Direction.Up).getKeyFrame(showTime, true), 200, 160);
+		game.batch.draw(hood.direction(Skater.Direction.Down).getKeyFrame(showTime, true), 300, 160);
+		game.batch.draw(hood.direction(Skater.Direction.Right).getKeyFrame(showTime, true), 400, 160);
+		game.batch.draw(hood.direction(Skater.Direction.Wipeout).getKeyFrame(showTime, true), 500, 160);
+		game.batch.draw(kid.direction(Skater.Direction.Left).getKeyFrame(showTime, true), 100, 400);
+		game.batch.draw(kid.direction(Skater.Direction.Up).getKeyFrame(showTime, true), 200, 400);
+		game.batch.draw(kid.direction(Skater.Direction.Down).getKeyFrame(showTime, true), 300, 400);
+		game.batch.draw(kid.direction(Skater.Direction.Right).getKeyFrame(showTime, true), 400, 400);
+		game.batch.draw(kid.direction(Skater.Direction.Wipeout).getKeyFrame(showTime, true), 500, 400);
 		game.batch.end();
 
 		if(Gdx.input.isTouched()) {
@@ -77,6 +104,9 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		img.dispose();
+		dudeImg.dispose();
+		grilImg.dispose();
+		hoodImg.dispose();
+		kidImg.dispose();
 	}
 }

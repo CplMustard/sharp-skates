@@ -17,8 +17,8 @@ public class GameScreen implements Screen {
 	final SharpSkates game;
 
 	Texture img;
+	Skater dude;
 	OrthographicCamera camera;
-	Rectangle dude;
 	float playTime;
 
 	float targetX;
@@ -26,27 +26,26 @@ public class GameScreen implements Screen {
 	float deltaX;
 	float deltaY;
 
+	Skater.Direction dir;
+
 	public GameScreen(final SharpSkates gam) {
 		this.game = gam;
 		// image to be used for sprite
 		img = new Texture("skater_a.png");
+		dude = new Skater(img, 32);
 		// camera to allow for view
 		camera = new OrthographicCamera();
 		// false means y increases upward
 		camera.setToOrtho(false, game.width, game.height);
-		// game objects are rectangles
-		dude = new Rectangle();
-		dude.x = game.width/2 - game.spriteDim/2;
-		dude.y = 0;
-		dude.width = game.spriteDim;
-		dude.height = game.spriteDim;
-		
-		playTime = 0.0f;
+
+		playTime = 0;
 
 		targetX = 0;
 		targetY = 0;
 		deltaX = 0;
 		deltaY = 0;
+
+		dir = Skater.Direction.Right;
 	}
 
 	public void render(float delta) {
@@ -54,12 +53,14 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClearColor(game.bgRed, game.bgGreen, game.bgBlue, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		playTime += delta;
+
 		camera.update();
 		// set projection matrix to one used by camera
 		game.batch.setProjectionMatrix(camera.combined);
 		// set up batch
 		game.batch.begin();
-		game.batch.draw(img, dude.x, dude.y);
+		game.batch.draw(dude.direction(dir).getKeyFrame(playTime, true), dude.x, dude.y);
 		game.batch.end();
 
 		// handle touch/mouse input
@@ -82,10 +83,25 @@ public class GameScreen implements Screen {
 
 		// enforce boundaries
 		if(dude.x < 0) dude.x = 0;
-		if(dude.x > game.width - dude.width) dude.x = game.width - dude.width;
+		if(dude.x > game.width - dude.size) dude.x = game.width - dude.size;
 
 		if(dude.y < 0) dude.y = 0;
-		if(dude.y > game.height - dude.height) dude.y = game.height - dude.height;
+		if(dude.y > game.height - dude.size) dude.y = game.height - dude.size;
+
+		if(Math.abs(deltaX) > Math.abs(deltaY)) {
+			if(deltaX > 0) {
+				dir = Skater.Direction.Right;
+			} else if(deltaX < 0) {
+				dir = Skater.Direction.Left;
+			}
+		} else if(Math.abs(deltaX) < Math.abs(deltaY)) {
+			if(deltaY > 0) {
+				dir = Skater.Direction.Up;
+			} else if(deltaY < 0) {
+				dir = Skater.Direction.Down;
+			}
+		}
+
 	}
 
 	@Override
