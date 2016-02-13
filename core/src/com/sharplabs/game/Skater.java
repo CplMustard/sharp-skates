@@ -19,7 +19,7 @@ public class Skater {
 	float deltaX;
 	float deltaY;
 
-  float modSpeed = 1;//Speed modifier, by default set to 1. Slow slide = .5 fast slide = 2
+        public float modSpeed = 1;//Speed modifier, by default set to 1. Slow slide = .5 fast slide = 2
 	float originX;
 	float originY;
 
