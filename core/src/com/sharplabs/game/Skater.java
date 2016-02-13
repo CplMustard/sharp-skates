@@ -64,6 +64,8 @@ public class Skater {
 			x = 0;
 			y = 0;
 		}
+		targetX = x;
+		targetY = y;
 		collided = false;
 		
 		skaterRectangle.set(x,y,size,size);
@@ -208,13 +210,18 @@ public class Skater {
 	}
 
 	void girlMove(SharpSkates game, float delta) {
-		// TODO: girl movement logic
 		changeTarget(originX + (float)Math.sin(delta)*245,
 				originY + (float)Math.cos(delta)*108, game);
 		playerMove(game);
 	}
 
 	void kidMove(SharpSkates game) {
-		// TODO: kid movement logic
+		if((Math.abs(x - targetX) < game.step) && (Math.abs(y - targetY) < game.step)) {
+			Random r = new Random();
+			float randX = r.nextFloat() * game.width/3 + game.width/4;
+			float randY = r.nextFloat() * game.height/3 + game.height/4;
+			changeTarget(randX, randY, game);
+		}
+		playerMove(game);
 	}
 }
