@@ -17,6 +17,7 @@ public class Skater {
 	public float targetY;
 	float deltaX;
 	float deltaY;
+  float modSpeed = 1;//Speed modifier, by default set to 1. Slow slide = .5 fast slide = 2
 
 	public int size;
 	public float x;
@@ -99,45 +100,56 @@ public class Skater {
 	}
 	
 	//Sets Collision Logic?
-	public void collision(float targX, float targY, float speed) {
+	public void collision(float targX, float targY, float speed, SharpSkates game) {
 		cTime = 1000;
 		collided = true;
+		modSpeed = speed;
+		playerMove(game);
 	}
 	
-	public void bounce(float targX, float targY, float speed){
-	
+	public void bounce(float targX, float targY, float speed, SharpSkates game){
+	  cTime = 250;
+		//collided = true;
+		modSpeed = speed;
+		playerMove(game);
 	}
 
 	public void changeTarget(float nx, float ny, SharpSkates game) {
 		double theta = Math.atan2((nx - x), (ny - y));
-		deltaX = (float)Math.sin(theta) * game.step;
-		deltaY = (float)Math.cos(theta) * game.step;
+		deltaX = (float)Math.sin(theta) * (game.step * modSpeed);
+		deltaY = (float)Math.cos(theta) * (game.step * modSpeed);
 		targetX = nx;
 		targetY = ny;
 	}
 
 	public void move(SharpSkates game) {
-		switch(kind) {
-			case Player:
-				playerMove(game);
-				break;
-			case Hooligan:
-				hooliganMove(game);
-				break;
-			case Girl:
-				girlMove(game);
-				break;
-			case Kid:
-				kidMove(game);
-				break;
-			default:
-				break;
+	  if(cTime == 0){
+	    modSpeed = 1;
+		  switch(kind) {
+			  case Player:
+				  playerMove(game);
+				  break;
+			  case Hooligan:
+				  hooliganMove(game);
+				  break;
+			  case Girl:
+				  girlMove(game);
+				  break;
+			  case Kid:
+				  kidMove(game);
+				  break;
+			  default:
+				  break;
+		   }
+		}else{
+		  cTime--;
+		  //SLIDE MOVEMENT
 		}
 	}
 
 	void playerMove(SharpSkates game) {
-		if(Math.abs(x - targetX) > game.step) x += deltaX;
-		if(Math.abs(y - targetY) > game.step) y += deltaY;
+		if(Math.abs(x - targetX) > game.step * modSpeed) x += deltaX;
+		if(Math.abs(y - targetY) > game.step * modSpeed) y += deltaY;
 
 		if(x < 0) x = 0;
 		if(x > game.width - size) x = game.width - size;
