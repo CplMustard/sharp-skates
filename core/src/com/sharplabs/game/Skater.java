@@ -10,15 +10,22 @@ public class Skater {
 	Texture img;
 	float showTime;
 
+	public int size;
+	public float x;
+	public float y;
+
 	public enum Direction {
 		Right,
 		Left,
-		Up,
 		Down,
+		Up,
 		Wipeout
 	}
 
 	public Skater(final Texture image, int size) {
+		this.size = size;
+		x = 0;
+		y = 0;
 		// store the image
 		img = image;
 
@@ -63,4 +70,5 @@ public class Skater {
 	public Animation direction(Direction dir) {
 		return sprites.get(dir.ordinal());
 	}
+
 }
