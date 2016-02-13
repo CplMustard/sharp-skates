@@ -5,6 +5,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class SharpSkates extends Game {
+	// constants for use throughout
+	public static int width = 800;
+	public static int height = 480;
+	public static float bgRed = 214/255f;
+	public static float bgGreen = 236/255f;
+	public static float bgBlue = 235/255f;
+	public static int spriteDim = 32;
+
 	SpriteBatch batch;
 	BitmapFont font;
 	
