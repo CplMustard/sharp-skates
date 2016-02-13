@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -22,6 +23,7 @@ public class GameScreen implements Screen {
 	Skater dude;
 	OrthographicCamera camera;
 	float playTime;
+	Sprite bg;
 
 	//Char Tracker: Keeps Track of Sprites in Game
 	//Add new Skaters to this list (Suggestion: Set Player index 0)
@@ -38,6 +40,10 @@ public class GameScreen implements Screen {
 		camera = new OrthographicCamera();
 		// false means y increases upward
 		camera.setToOrtho(false, game.width, game.height);
+
+		bg = new Sprite(new Texture("background.png"));
+		bg.setCenter(game.width/2, game.height/2);
+		bg.scale(0.05f);
 
 		playTime = 0;
 	}
@@ -57,6 +63,7 @@ public class GameScreen implements Screen {
 		game.batch.setProjectionMatrix(camera.combined);
 		// set up batch
 		game.batch.begin();
+		bg.draw(game.batch);
 		game.batch.draw(dude.direction(dude.dir).getKeyFrame(playTime, true), dude.x, dude.y);
 		game.batch.end();
 
@@ -75,14 +82,14 @@ public class GameScreen implements Screen {
 				Rectangle intersection = new Rectangle(0,0,0,0);
 				intersector.intersectRectangles(skaterList.get(i).skaterRectangle, skaterList.get(j).skaterRectangle, intersection);
 				if(intersection.getHeight() != 0){
-					//Interesction occured @
-					//Check if Player
-					//If Neither Player
-					//Move Object 1 lightly 
-					//Move Object 2 lightly
-					//If Player
-					//Move non-player
-					//Slow down player							    
+					if(skaterList.get(i).kind == Skater.Kind.Kid ^ skaterList.get(i).kind == Skater.Kind.Kid){
+					    //Non-KID: kid careens
+					}else if((skaterList.get(i).kind == Skater.Kind.Player || skaterList.get(i).kind == Skater.Kind.Player) && (skaterList.get(i).kind == Skater.Kind.Hooligan || skaterList.get(i).kind == Skater.Kind.Hooligan)){
+					    //HOOLIGAN PLAYER: Player falls
+					}else if(skaterList.get(i).kind == Skater.Kind.Kid && skaterList.get(j).kind == Skater.Kind.Kid){
+					    //CHILD CHILD: Child Bounce
+					}
+									    
 				}
 			}
 		}

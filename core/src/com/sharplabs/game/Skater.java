@@ -22,6 +22,7 @@ public class Skater {
 	public float x;
 	public float y;
 	public int cTime = 0;
+	public boolean collided;
 	
 	public Rectangle skaterRectangle = new Rectangle();
 	public Direction dir;
@@ -47,6 +48,7 @@ public class Skater {
 		this.size = size;
 		x = 0;
 		y = 0;
+		collided = false;
 		
 		skaterRectangle.set(x,y,size,size);
 		// store the image
@@ -99,6 +101,7 @@ public class Skater {
 	//Sets Collision Logic?
 	public void collision(Rectangle hit) {
 		cTime = 1000;
+		collided = true;
 	}
 
 	public void changeTarget(float nx, float ny, SharpSkates game) {
