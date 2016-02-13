@@ -128,7 +128,7 @@ public class GameScreen implements Screen {
 						    iSkate.collided = true;
 						    iSkate.cTime = 400;
 					    }					  
-					  }
+/*					  }
 					  else if(skaterList.get(i).collided == true && skaterList.get(j).collided == true){
 					      //BOTH COLLIDED: Bounce
 					      //skaterList.get(i).collision(jTargetX,jTargetY,(float)1,game);
@@ -137,11 +137,11 @@ public class GameScreen implements Screen {
 						  iSkate.changeTarget(jTargetX, jTargetY, game);
 						  iSkate.collided = true;
 						  iSkate.cTime = 400;
-						  iSkate.modSpeed = 1;
 
+						  jSkate.mpdSpeed = 1;
 						  jSkate.changeTarget(iTargetX, iTargetY, game);
 						  jSkate.collided = true;
-						  jSkate.cTime = 400;
+						  jSkate.cTime = 400;*/
 					  }else if(skaterList.get(i).collided == true && skaterList.get(i).kind == Skater.Kind.Kid){
 					      //I IS COLLIDED KID -> J: J goes flying
 					      //skaterList.get(i).collision(jTargetX,jTargetY,(float)0.5,game);

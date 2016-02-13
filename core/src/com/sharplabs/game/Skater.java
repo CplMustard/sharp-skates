@@ -227,27 +227,27 @@ public class Skater {
 	}
 
 	void hooliganMove(SharpSkates game, Array<Skater> skaterList) {
-		float closestTargetX = Float.MAX_VALUE;
-		float closestTargetY = Float.MAX_VALUE;
+		float closestTargetX = Float.MIN_VALUE;
+		float closestTargetY = Float.MIN_VALUE;
 		for(int i=0; i<skaterList.size; i++){
-			if(skaterList.get(i).kind == Kind.Girl){
-				if(Math.abs((y - skaterList.get(i).y) + (x - skaterList.get(i).x)) < Math.abs((y - closestTargetY) + (x - closestTargetX))){
+			//if(skaterList.get(i).kind == Kind.Girl){
+				if(Math.abs((y - skaterList.get(i).y) + (x - skaterList.get(i).x)) > Math.abs((y - closestTargetY) + (x - closestTargetX))){
 					closestTargetX = skaterList.get(i).x;
 					closestTargetY = skaterList.get(i).y;
 				}
-			}
+			//}
 		}
 		changeTarget(closestTargetX, closestTargetY, game);
 
 		if(Math.abs(x - targetX) > game.step * modSpeed) {
 			x += deltaX;
 		} else {
-			x -= deltaX;
+			x -= 2*deltaX;
 		}
 		if(Math.abs(y - targetY) > game.step * modSpeed) {
 			y += deltaY;
 		} else {
-			y -= deltaY;
+			y -= 2*deltaY;
 		}
 
 		if(x < 0) {
