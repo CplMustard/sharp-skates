@@ -76,16 +76,9 @@ public class GameScreen implements Screen {
 			deltaY = (float)Math.cos(theta) * game.step;
 		}
 
-		if(dude.x == targetX) {
-			deltaX = 0;
-		} else {
-			dude.x += deltaX;
-		}
-		if(dude.y == targetY) {
-			deltaY = 0;
-		} else {
-			dude.y += deltaY;
-		}
+		// move if appropriate
+		if(Math.abs(dude.x - targetX) > game.step) dude.x += deltaX;
+		if(Math.abs(dude.y - targetY) > game.step) dude.y += deltaY;
 
 		// enforce boundaries
 		if(dude.x < 0) dude.x = 0;
