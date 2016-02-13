@@ -18,6 +18,7 @@ public class GameScreen implements Screen {
 	Texture img;
 	OrthographicCamera camera;
 	Rectangle dude;
+	float playTime;
 
 	public GameScreen(final SharpSkates gam) {
 		this.game = gam;
@@ -26,18 +27,20 @@ public class GameScreen implements Screen {
 		// camera to allow for view
 		camera = new OrthographicCamera();
 		// false means y increases upward
-		camera.setToOrtho(false, 800, 480);
+		camera.setToOrtho(false, game.width, game.height);
 		// game objects are rectangles
 		dude = new Rectangle();
-		dude.x = 800/2 - 64/2;
+		dude.x = game.width/2 - 64/2;
 		dude.y = 0;
 		dude.width = 64;
 		dude.height = 64;
+		
+		playTime = 0.0f;
 	}
 
 	public void render(float delta) {
 		// make background ice-like
-		Gdx.gl.glClearColor(214/255f, 236/255f, 235/255f, 1);
+		Gdx.gl.glClearColor(game.bgRed, game.bgGreen, game.bgBlue, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camera.update();
@@ -59,7 +62,7 @@ public class GameScreen implements Screen {
 
 		// enforce boundaries
 		if(dude.x < 0) dude.x = 0;
-		if(dude.x > 800 - 64) dude.x = 800 - 64;
+		if(dude.x > game.width - 64) dude.x = game.width - 64;
 	}
 
 	@Override
