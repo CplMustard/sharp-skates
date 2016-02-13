@@ -71,18 +71,18 @@ public class GameScreen implements Screen {
 			// TODO: this should be some sort of "target position" instead
 			targetX = touchPos.x;
 			targetY = touchPos.y;
-			double theta = Math.atan((targetX - dude.x) / (targetY - dude.y));
+			double theta = Math.atan2((targetX - dude.x), (targetY - dude.y));
 			deltaX = (float)Math.sin(theta) * game.step;
 			deltaY = (float)Math.cos(theta) * game.step;
 		}
 
-		if(dude.x > targetX) {
-			dude.x -= deltaX;
+		if(dude.x == targetX) {
+			deltaX = 0;
 		} else {
 			dude.x += deltaX;
 		}
-		if(dude.y > targetY) {
-			dude.y -= deltaY;
+		if(dude.y == targetY) {
+			deltaY = 0;
 		} else {
 			dude.y += deltaY;
 		}
