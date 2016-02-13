@@ -143,6 +143,7 @@ public class Skater {
 
 	public void move(SharpSkates game, float delta, Array<Skater> skaterList) {
 		if(cTime == 0){
+		  dir = Direction.Right;
 		modSpeed = 1;
 		collided = false;
 		  switch(kind) {
@@ -163,6 +164,7 @@ public class Skater {
 		  }
 		}else{
 		  cTime--;
+		  dir = Direction.Wipeout;
 		  //modSpeed = modSpeed * (float)0.995;
 		  playerMove(game);
 		}
