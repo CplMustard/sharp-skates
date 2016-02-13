@@ -1,5 +1,6 @@
 package com.sharplabs.game;
 
+import java.lang.Math;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Screen;
@@ -20,6 +21,11 @@ public class GameScreen implements Screen {
 	Rectangle dude;
 	float playTime;
 
+	float targetX;
+	float targetY;
+	float deltaX;
+	float deltaY;
+
 	public GameScreen(final SharpSkates gam) {
 		this.game = gam;
 		// image to be used for sprite
@@ -36,6 +42,11 @@ public class GameScreen implements Screen {
 		dude.height = game.spriteDim;
 		
 		playTime = 0.0f;
+
+		targetX = 0;
+		targetY = 0;
+		deltaX = 0;
+		deltaY = 0;
 	}
 
 	public void render(float delta) {
@@ -58,8 +69,22 @@ public class GameScreen implements Screen {
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
 			// TODO: this should be some sort of "target position" instead
-			dude.x = touchPos.x - dude.width/2;
-			dude.y = touchPos.y - dude.height/2;
+			targetX = touchPos.x;
+			targetY = touchPos.y;
+			double theta = Math.atan((targetX - dude.x) / (targetY - dude.y));
+			deltaX = (float)Math.sin(theta) * game.step;
+			deltaY = (float)Math.cos(theta) * game.step;
+		}
+
+		if(dude.x > targetX) {
+			dude.x -= deltaX;
+		} else {
+			dude.x += deltaX;
+		}
+		if(dude.y > targetY) {
+			dude.y -= deltaY;
+		} else {
+			dude.y += deltaY;
 		}
 
 		// enforce boundaries
