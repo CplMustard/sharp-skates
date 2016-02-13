@@ -174,11 +174,35 @@ public class Skater {
 		if(Math.abs(x - targetX) > game.step * modSpeed) x += deltaX;
 		if(Math.abs(y - targetY) > game.step * modSpeed) y += deltaY;
 
-		if(x < 0) x = 0;
-		if(x > game.width - size) x = game.width - size;
+		if(x < 0) {
+		  if(dir == Direction.Wipeout) {
+		    cTime = 0;
+		  } else {
+		    x = 0;
+		  }
+		}
+		if(x > game.width - size) {
+		  if(dir == Direction.Wipeout) {
+		    cTime = 0;
+		  } else {
+		    x = game.width - size;
+		  }
+		}
 
-		if(y < 0) y = 0;
-		if(y > game.height - size) y = game.height - size;
+		if(y < 0) {
+		  if(dir == Direction.Wipeout) {
+		    cTime = 0;
+		  } else {
+		    y = 0;
+		  }
+		}
+		if(y > game.height - size) {
+		  if(dir == Direction.Wipeout) {
+		    cTime = 0;
+		  } else {
+		    y = game.height - size;
+		  }
+		}
 
 		float absX = Math.abs(deltaX);
 		float absY = Math.abs(deltaY);
