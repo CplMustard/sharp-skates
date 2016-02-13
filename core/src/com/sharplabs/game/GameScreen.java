@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -22,6 +23,7 @@ public class GameScreen implements Screen {
 	Skater dude;
 	OrthographicCamera camera;
 	float playTime;
+	Sprite bg;
 
 	//Char Tracker: Keeps Track of Sprites in Game
 	//Add new Skaters to this list (Suggestion: Set Player index 0)
@@ -43,6 +45,10 @@ public class GameScreen implements Screen {
 		camera = new OrthographicCamera();
 		// false means y increases upward
 		camera.setToOrtho(false, game.width, game.height);
+
+		bg = new Sprite(new Texture("background.png"));
+		bg.setCenter(game.width/2, game.height/2);
+		bg.scale(0.05f);
 
 		playTime = 0;
 
@@ -67,6 +73,7 @@ public class GameScreen implements Screen {
 		game.batch.setProjectionMatrix(camera.combined);
 		// set up batch
 		game.batch.begin();
+		bg.draw(game.batch);
 		game.batch.draw(dude.direction(dude.dir).getKeyFrame(playTime, true), dude.x, dude.y);
 		game.batch.end();
 
